@@ -12,6 +12,9 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/Users/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/0001SpringBasics/Users/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/001SecurityStudyApp/SessionSecurity/SessionSecurityBackend/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/001SecurityStudyApp/Oauth2AuthorizationCodeFlow/SimpleAuthorizationServer/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/TokenSetup/backend/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/TokenSetup/AzureSecurityBackend/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -1,0 +1,24 @@
+
+server:
+  port: 8080
+
+
+spring:
+
+  application:
+    name: backend
+
+  security:
+    oauth2:
+      client:
+        registration:
+          azure:
+            client-id: '4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21'
+            client-secret: 'xO38Q~~W7.ScGhohRgFJb_SrITFHKCaX2ry~eblN'
+            scope: openid, profile, email
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8080/login/oauth2/code/azure"
+        provider:
+          azure:
+            issuer-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/v2.0
+

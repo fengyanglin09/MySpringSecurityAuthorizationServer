@@ -7,9 +7,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="AzureSecurityBackend" />
+        <module name="Users" />
         <module name="SessionSecurityBackend" />
         <module name="MyRetroApp" />
-        <module name="Users" />
+        <module name="SimpleAuthorizationServer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -26,11 +28,13 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="AuthorizationServer" options="-parameters" />
       <module name="AuthorizationServer2" options="-parameters" />
+      <module name="AzureSecurityBackend" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />
       <module name="ResourceServer2" options="-parameters" />
       <module name="SessionSecurityBackend" options="-parameters" />
+      <module name="SimpleAuthorizationServer" options="-parameters" />
       <module name="SpringBootAuthorizationServerProject" options="" />
       <module name="Users" options="-parameters" />
       <module name="users (2)" options="-parameters" />
