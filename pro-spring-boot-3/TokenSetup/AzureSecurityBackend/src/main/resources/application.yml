@@ -13,21 +13,5 @@ logging:
     org.springframework.security.web.authentication.logout: DEBUG
     org.springframework.security.config: DEBUG
 
-spring:
 
-  application:
-    name: backend
-
-  security:
-    oauth2:
-      client:
-        registration:
-          azure:
-
-            scope: openid
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://localhost:8080/login/oauth2/code/"
-        provider:
-          azure:
-            issuer-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/v2.0
 
