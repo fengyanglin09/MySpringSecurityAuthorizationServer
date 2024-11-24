@@ -1,18 +1,26 @@
 package diy.mqml.backend.configs.security;
 
+import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadResourceServerHttpSecurityConfigurer;
 import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadWebApplicationHttpSecurityConfigurer;
+import diy.mqml.backend.configs.security.authenticationService.CustomOidcAuthenticationProvider;
 import diy.mqml.backend.configs.security.filter.UserInformationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
+import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
 
 /**
  *
@@ -43,9 +51,11 @@ public class SecurityConfig {
      * Add configuration logic as needed.
      */
     @Bean
-    SecurityFilterChain filterChain(
+//    @Order(2)
+    SecurityFilterChain authenticationFilterChain(
             HttpSecurity http,
-            CorsConfigurationSource corsConfigurationSource
+            CorsConfigurationSource corsConfigurationSource,
+            CustomOidcAuthenticationProvider oidcAuthenticationProvider
     ) throws Exception {
         http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
 
@@ -53,9 +63,16 @@ public class SecurityConfig {
 
         http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource));
 
-        http.authorizeHttpRequests(request->request.anyRequest().authenticated());
+        http.anonymous(AbstractHttpConfigurer::disable);
 
-        http.addFilterAfter(new UserInformationFilter(), OAuth2LoginAuthenticationFilter.class);
+        http.authorizeHttpRequests(request->request
+                .requestMatchers("/auth-status/**").permitAll()
+                .anyRequest().authenticated());
+
+//        http.authenticationProvider(oidcAuthenticationProvider);
+//        http.authenticationManager(authenticationManager);
+
+//        http.addFilterAfter(new UserInformationFilter(), OAuth2AuthorizationRequestRedirectFilter.class);
 
         // Do some custom configuration.
         return http.build();
