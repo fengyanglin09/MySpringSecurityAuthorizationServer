@@ -22,7 +22,8 @@ public class AuthRestController {
                 && authentication.getPrincipal().equals("anonymousUser"))) {
             return ResponseEntity.ok("Authenticated");
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            return ResponseEntity.ok("Unauthenticated");
         }
     }
 }

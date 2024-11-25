@@ -57,11 +57,15 @@ public class SecurityConfig {
             CorsConfigurationSource corsConfigurationSource,
             CustomOidcAuthenticationProvider oidcAuthenticationProvider
     ) throws Exception {
-        http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource)); // Attach CORS config
 
         http.csrf(AbstractHttpConfigurer::disable);
 
-        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource));
+        http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
+
+
+
+//        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource));
 
         http.anonymous(AbstractHttpConfigurer::disable);
 
