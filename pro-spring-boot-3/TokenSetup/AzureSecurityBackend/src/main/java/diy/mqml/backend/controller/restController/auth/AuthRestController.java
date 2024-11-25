@@ -1,6 +1,7 @@
-package diy.mqml.backend.restController.auth;
+package diy.mqml.backend.controller.restController.auth;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth-status")
+@Slf4j
 public class AuthRestController {
     @GetMapping("/session-status")
     public ResponseEntity<String> getSessionStatus() {
@@ -22,8 +24,11 @@ public class AuthRestController {
                 && authentication.getPrincipal().equals("anonymousUser"))) {
             return ResponseEntity.ok("Authenticated");
         } else {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            log.warn("user is not authenticated!");
             return ResponseEntity.ok("Unauthenticated");
         }
     }
+
+
+
 }

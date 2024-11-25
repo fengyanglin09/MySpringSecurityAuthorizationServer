@@ -15,7 +15,7 @@ export class AuthService {
 
 
   authenticate(){
-    window.location.href = `${this.baseUrl}/api/user`
+    window.location.href = `${this.baseUrl}/welcome-page`
   }
 
   isAuthenticated():Observable<string> {
@@ -25,26 +25,6 @@ export class AuthService {
 
   getUserInfo(): Observable<any> {
     return this.http.get(`${this.baseUrl}/api/user`)
-      // .pipe(
-      //   catchError((err)=>{
-      //
-      //     if(err.status === 302 && err.headers.get('Location')) {
-      //       window.location.href = err.headers.get('Location')
-      //     }
-      //     return err
-      //   })
-      // )
-    //   .pipe(
-    //   catchError((err) => {
-    //     console.error('Error occurred:', error);
-    //     if(err.status === 302 && err.headers.get('Location')){
-    //       window.location.href = err.headers.get('Location')
-    //     }else{
-    //       return err
-    //     }
-    //   })
-    // );
-
   }
 
 }

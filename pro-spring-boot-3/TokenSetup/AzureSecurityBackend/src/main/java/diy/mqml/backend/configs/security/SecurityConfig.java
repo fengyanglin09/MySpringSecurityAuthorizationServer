@@ -1,26 +1,17 @@
 package diy.mqml.backend.configs.security;
 
-import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadResourceServerHttpSecurityConfigurer;
 import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadWebApplicationHttpSecurityConfigurer;
-import diy.mqml.backend.configs.security.authenticationService.CustomOidcAuthenticationProvider;
-import diy.mqml.backend.configs.security.filter.UserInformationFilter;
+import diy.mqml.backend.configs.security.serviceConfig.AzureSecuritySimpleAuthSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter;
-import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
-
-import java.util.Arrays;
 
 /**
  *
@@ -54,8 +45,7 @@ public class SecurityConfig {
 //    @Order(2)
     SecurityFilterChain authenticationFilterChain(
             HttpSecurity http,
-            CorsConfigurationSource corsConfigurationSource,
-            CustomOidcAuthenticationProvider oidcAuthenticationProvider
+            CorsConfigurationSource corsConfigurationSource
     ) throws Exception {
         http.cors(cors -> cors.configurationSource(corsConfigurationSource)); // Attach CORS config
 
@@ -63,7 +53,9 @@ public class SecurityConfig {
 
         http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
 
-
+        http.oauth2Login(config-> config.successHandler(new AzureSecuritySimpleAuthSuccessHandler((request, response, authentication)->{
+                    //todo - define the logic to add users to database
+                })));
 
 //        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource));
 
@@ -71,6 +63,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(request->request
                 .requestMatchers("/auth-status/**").permitAll()
+                .requestMatchers("/welcome-page/**").authenticated()
                 .anyRequest().authenticated());
 
 //        http.authenticationProvider(oidcAuthenticationProvider);

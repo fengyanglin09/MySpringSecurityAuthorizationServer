@@ -13,6 +13,11 @@ logging:
     org.springframework.security.web.authentication.logout: DEBUG
     org.springframework.security.config: DEBUG
 
+
+app-landing-page:
+  name: 'app-main-page'
+  url: 'http://localhost:4200/'
+
 spring:
 
   application:
