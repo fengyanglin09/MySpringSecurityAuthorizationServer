@@ -1,7 +1,7 @@
 package diy.mqml.backend.configs.security;
 
 import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadWebApplicationHttpSecurityConfigurer;
-import diy.mqml.backend.configs.security.serviceConfig.AzureSecuritySimpleAuthSuccessHandler;
+import diy.mqml.backend.configs.security.authenticationConfig.AzureSecuritySimpleAuthSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;

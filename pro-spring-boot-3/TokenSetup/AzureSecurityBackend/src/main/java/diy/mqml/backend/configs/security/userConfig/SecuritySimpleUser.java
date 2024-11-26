@@ -12,7 +12,7 @@ import java.util.Objects;
 @Builder
 @Getter
 @Accessors(chain = true)
-public class AzureSecuritySimpleUser implements Serializable {
+public class SecuritySimpleUser implements Serializable {
 
     private final String id;
     private final String lanId;
@@ -35,7 +35,7 @@ public class AzureSecuritySimpleUser implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AzureSecuritySimpleUser that)) return false;
+        if (!(o instanceof SecuritySimpleUser that)) return false;
 
         return Objects.equals(this.id, that.id) &&
                 Objects.equals(this.lanId, that.lanId) &&

@@ -1,8 +1,5 @@
 package diy.mqml.backend.configs.security.userConfig;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.CredentialsContainer;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,20 +7,19 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 //@Getter
 //@Setter
 //@Accessors(chain = true)
-public class AzureSecuritySimpleUserDetails implements UserDetails, Authentication, CredentialsContainer {
+public class SecuritySimpleUserDetails implements UserDetails, Authentication, CredentialsContainer {
 
-    protected final AzureSecuritySimpleUser user;
+    protected final SecuritySimpleUser user;
     protected List<? extends GrantedAuthority> authorities;
     protected boolean authenticated = false;
 
-    public AzureSecuritySimpleUserDetails(AzureSecuritySimpleUser user,
-                                  Collection<? extends GrantedAuthority> authorities) {
+    public SecuritySimpleUserDetails(SecuritySimpleUser user,
+                                     Collection<? extends GrantedAuthority> authorities) {
         this.user = user;
         setAuthorities(authorities);
     }
@@ -44,7 +40,7 @@ public class AzureSecuritySimpleUserDetails implements UserDetails, Authenticati
     }
 
     @Override
-    public AzureSecuritySimpleUser getDetails() {
+    public SecuritySimpleUser getDetails() {
         return user;
     }
 
@@ -63,7 +59,7 @@ public class AzureSecuritySimpleUserDetails implements UserDetails, Authenticati
         return user.getLanId();
     }
 
-    public AzureSecuritySimpleUserSession getUserSession() {
+    public SecuritySimpleUserSession getUserSession() {
         return null;
     }
 

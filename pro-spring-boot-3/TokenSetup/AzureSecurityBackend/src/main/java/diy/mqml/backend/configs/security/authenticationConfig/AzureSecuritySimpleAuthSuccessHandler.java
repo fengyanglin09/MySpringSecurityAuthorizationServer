@@ -1,4 +1,4 @@
-package diy.mqml.backend.configs.security.serviceConfig;
+package diy.mqml.backend.configs.security.authenticationConfig;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

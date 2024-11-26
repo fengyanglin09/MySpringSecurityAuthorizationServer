@@ -2,6 +2,7 @@ package diy.mqml.backend.configs.security.userConfig;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -11,9 +12,8 @@ import java.util.Objects;
 
 @Builder
 @Getter
-@Setter
-@Accessors(chain = true)
-public class AzureSecuritySimpleUserSession {
+//@NoArgsConstructor
+public class SecuritySimpleUserSession {
     private final String id;
     private final LocalDateTime authenticatedDateTime;
     private final LocalDateTime issuedDateTime;
@@ -33,7 +33,7 @@ public class AzureSecuritySimpleUserSession {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof AzureSecuritySimpleUserSession that)) return false;
+        if (!(o instanceof SecuritySimpleUserSession that)) return false;
         return Objects.equals(getId(), that.getId()) && Objects.equals(getAuthenticatedDateTime(), that.getAuthenticatedDateTime()) && Objects.equals(getIssuedDateTime(), that.getIssuedDateTime()) && Objects.equals(getExpiredDateTime(), that.getExpiredDateTime());
     }
 
