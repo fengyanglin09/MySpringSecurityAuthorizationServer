@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -34,10 +33,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
 
 
-    @Bean
-    public OidcUserService oidcUserService() {
-        return new OidcUserService(); // Default implementation of OIDC user service
-    }
+
     /**
      * Add configuration logic as needed.
      */
@@ -66,51 +62,10 @@ public class SecurityConfig {
                 .requestMatchers("/welcome-page/**").authenticated()
                 .anyRequest().authenticated());
 
-//        http.authenticationProvider(oidcAuthenticationProvider);
-//        http.authenticationManager(authenticationManager);
 
-//        http.addFilterAfter(new UserInformationFilter(), OAuth2AuthorizationRequestRedirectFilter.class);
-
-        // Do some custom configuration.
         return http.build();
     }
 
-//    //Purpose: Protects API endpoints by enforcing bearer token-based authentication.
-//    @Bean
-//    @Order(1)
-//    public SecurityFilterChain apiFilterChain(HttpSecurity http,
-//                                              CorsConfigurationSource corsConfigurationSource) throws Exception {
-//        http.with(AadResourceServerHttpSecurityConfigurer.aadResourceServer(), Customizer.withDefaults());
-//
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource))
-//                .authorizeHttpRequests( auth -> auth.requestMatchers("/h2-console/**").permitAll())
-//                .authorizeHttpRequests( auth -> auth.requestMatchers("/api/**").authenticated())
-//                .authorizeHttpRequests( auth -> auth.anyRequest().authenticated());
-//
-//        return http.build();
-//    }
-//
-//
-//    //Purpose: Secures web application routes, allowing unauthenticated access to specific routes like /login while protecting all others.
-//    @Bean
-//    @Order(2)
-//    public SecurityFilterChain htmlFilterChain(HttpSecurity http,
-//                                               CorsConfigurationSource corsConfigurationSource
-//                                               ) throws Exception {
-//
-//
-//        http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
-//
-//
-//        http.csrf(AbstractHttpConfigurer::disable)
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource));
-//
-//
-//        http.authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll())
-//                .oauth2Login(oauth -> oauth.loginPage("/oauth2/authorization/azure"));
-//        ;
-//
-//        return http.build();
-//    }
+
+
 }

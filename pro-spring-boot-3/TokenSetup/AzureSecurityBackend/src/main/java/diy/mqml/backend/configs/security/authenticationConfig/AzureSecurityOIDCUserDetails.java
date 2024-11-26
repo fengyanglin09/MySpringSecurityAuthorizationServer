@@ -9,18 +9,16 @@ import org.springframework.security.oauth2.core.oidc.OidcUserInfo;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Map;
 
-public class AzureSecuritySimpleUserDetails extends SecuritySimpleUserDetails implements OidcUser {
+public class AzureSecurityOIDCUserDetails extends SecuritySimpleUserDetails implements OidcUser {
 
     private final OidcUser oidcUser;
 
-    public AzureSecuritySimpleUserDetails(SecuritySimpleUser user,
-                                          Collection<? extends GrantedAuthority> authorities,
-                                          OidcIdToken oidcIdToken) {
+    public AzureSecurityOIDCUserDetails(SecuritySimpleUser user,
+                                        Collection<? extends GrantedAuthority> authorities,
+                                        OidcIdToken oidcIdToken) {
         super(user, authorities);
         this.oidcUser = new DefaultOidcUser(authorities, oidcIdToken);
     }
