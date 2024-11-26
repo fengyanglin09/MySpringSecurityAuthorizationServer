@@ -19,11 +19,8 @@ public class ApiController {
 
     @GetMapping("/user")
     public Map<String, Object> userInfo(
-            @AuthenticationPrincipal AzureSecurityOIDCUserDetails userDetails
+            @AuthenticationPrincipal SecuritySimpleUser simpleUser
     ) {
-
-
-        final SecuritySimpleUser simpleUser = userDetails.getDetails();
 
 
         final Map<String, Object> objectMap = Map.of(
