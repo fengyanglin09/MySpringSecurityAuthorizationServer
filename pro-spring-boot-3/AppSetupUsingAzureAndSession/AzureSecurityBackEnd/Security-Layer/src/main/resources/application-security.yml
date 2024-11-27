@@ -1,0 +1,38 @@
+
+
+
+
+logging:
+  level:
+    # Enable debug-level logging for Spring Security
+    org.springframework.security: DEBUG
+
+    # Enable logging for specific components (optional)
+#    org.springframework.security.authentication: DEBUG
+#    org.springframework.security.web.authentication: DEBUG
+#    org.springframework.security.web.authentication.logout: DEBUG
+#    org.springframework.security.config: DEBUG
+
+
+  #  application:
+#    name: AzureSecurityBackend
+
+
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+
+  cloud:
+    azure:
+      active-directory:
+        enabled: true
+        profile:
+          tenant-id: 'a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a'
+        credential:
+          client-id: '4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21'
+          client-secret: 'xO38Q~~W7.ScGhohRgFJb_SrITFHKCaX2ry~eblN'

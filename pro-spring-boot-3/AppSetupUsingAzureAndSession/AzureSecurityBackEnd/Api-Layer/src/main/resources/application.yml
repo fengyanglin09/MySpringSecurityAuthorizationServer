@@ -1,0 +1,87 @@
+
+server:
+  port: 8080
+
+#logging:
+#  level:
+#    # Enable debug-level logging for Spring Security
+#    org.springframework.security: DEBUG
+#
+#    # Enable logging for specific components (optional)
+#    org.springframework.security.authentication: DEBUG
+#    org.springframework.security.web.authentication: DEBUG
+#    org.springframework.security.web.authentication.logout: DEBUG
+#    org.springframework.security.config: DEBUG
+
+
+spring:
+  profiles:
+    active: ${ENV_PROFILE:local}
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+app-landing-page:
+  name: 'app-main-page'
+  url: 'http://localhost:4200/'
+
+#spring:
+#
+#  application:
+#    name: AzureSecurityBackend
+#
+#
+#  cloud:
+#    azure:
+#      active-directory:
+#        enabled: true
+#        profile:
+#          tenant-id: 'a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a'
+#        credential:
+#          client-id: '4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21'
+#          client-secret: 'xO38Q~~W7.ScGhohRgFJb_SrITFHKCaX2ry~eblN'
+
+
+
+#        app-id-uri: https://mctools.onmicrosoft.com/4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21
+#        application-type: web_application_and_resource_server  # This is required.
+#        authorization-clients:
+#          graph:
+#            authorizationGrantType: authorization_code  # This is required.
+#            scopes:
+#              - https://graph.microsoft.com/User.Read
+#              - https://graph.microsoft.com/Directory.Read.All
+#  cloud:
+#    azure:
+#      active-directory:
+#        b2c:
+#          enabled: true
+#          profile:
+#            tenant-id: 'a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a'
+#          credential:
+#            client-id: '4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21'
+#            client-secret: 'xO38Q~~W7.ScGhohRgFJb_SrITFHKCaX2ry~eblN'
+
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          azure:
+#            client-id: '4fabb1b5-e1cd-4f2a-8ef5-ce09a8804b21'
+#            client-secret: 'xO38Q~~W7.ScGhohRgFJb_SrITFHKCaX2ry~eblN'
+#            scope: openid
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "http://localhost:8080/login/oauth2/code/"
+#        provider:
+#          azure:
+#            authorization-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/oauth2/v2.0/authorize  # Authorization endpoint
+#            token-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/oauth2/v2.0/token  # Token endpoint
+#            user-info-uri: https://graph.microsoft.com/v1.0/me  # User Info endpoint
+#            jwk-set-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/discovery/v2.0/keys
+###            authorization-uri:
+##            issuer-uri: https://login.microsoftonline.com/a25fff9c-3f63-4fb2-9a8a-d9bdd0321f9a/v2.0
+

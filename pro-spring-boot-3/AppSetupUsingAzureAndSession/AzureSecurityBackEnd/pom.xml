@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>diy.mqml</groupId>
+  <artifactId>AzureSecurityBackEnd</artifactId>
+  <version>${revision}</version>
+  <name>AppSetup-Main</name>
+  <packaging>pom</packaging>
+
+
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.3.5</version>
+    <relativePath/> <!-- lookup parent from repository -->
+  </parent>
+
+  <modules>
+    <module>Security-Layer</module>
+    <module>Api-Layer</module>
+  </modules>
+
+  <properties>
+    <revision>1.0.0</revision>
+    <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/flatten-maven-plugin -->
+    <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.azure.spring</groupId>
+        <artifactId>spring-cloud-azure-dependencies</artifactId>
+        <version>5.18.0</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.18.0</version>
+      </dependency>
+
+      <!-- https://mvnrepository.com/artifact/com.microsoft.graph/microsoft-graph -->
+      <dependency>
+        <groupId>com.microsoft.graph</groupId>
+        <artifactId>microsoft-graph</artifactId>
+        <version>6.21.0</version>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+
+  <build>
+
+    <finalName>${project.artifactId}</finalName>
+
+    <pluginManagement>
+      <plugins>
+<!--        <plugin>-->
+<!--          <groupId>com.github.eirslett</groupId>-->
+<!--          <artifactId>frontend-maven-plugin</artifactId>-->
+<!--          <version>${frontend-maven-plugin.version}</version>-->
+<!--        </plugin>-->
+<!--        <plugin>-->
+<!--          <groupId>io.github.git-commit-id</groupId>-->
+<!--          <artifactId>git-commit-id-maven-plugin</artifactId>-->
+<!--          <configuration>-->
+<!--            <commitIdGenerationMode>full</commitIdGenerationMode>-->
+<!--            <dateFormat>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</dateFormat>-->
+<!--            <generateGitPropertiesFile>true</generateGitPropertiesFile>-->
+<!--            <generateGitPropertiesFilename>target/classes/git.properties</generateGitPropertiesFilename>-->
+<!--            <verbose>true</verbose>-->
+<!--            <includeOnlyProperties>-->
+<!--              <includeOnlyProperty>^git.branch$</includeOnlyProperty>-->
+<!--              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>-->
+<!--              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>-->
+<!--              <includeOnlyProperty>^git.commit.message.(full|short)$</includeOnlyProperty>-->
+<!--              <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>-->
+<!--              <includeOnlyProperty>^git.remote.origin.url$</includeOnlyProperty>-->
+<!--            </includeOnlyProperties>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>revision</id>-->
+<!--              <goals>-->
+<!--                <goal>revision</goal>-->
+<!--              </goals>-->
+<!--              <phase>initialize</phase>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <goals>-->
+<!--                <goal>integration-test</goal>-->
+<!--                <goal>verify</goal>-->
+<!--              </goals>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--          <configuration>-->
+<!--            <classesDirectory>target/classes</classesDirectory>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <forkCount>1</forkCount>
+            <reuseForks>true</reuseForks>
+            <includes>
+              <include>**/*Spec.java</include>
+              <include>**/*Test.java</include>
+            </includes>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.gmavenplus</groupId>
+          <artifactId>gmavenplus-plugin</artifactId>
+          <version>${gmavenplus-plugin.version}</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>addTestSources</goal>
+                <goal>compileTests</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+<!--        <plugin>-->
+<!--          <groupId>org.codehaus.mojo</groupId>-->
+<!--          <artifactId>build-helper-maven-plugin</artifactId>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>process-test-sources</id>-->
+<!--              <phase>process-test-sources</phase>-->
+<!--              <goals>-->
+<!--                <goal>add-test-source</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <sources>-->
+<!--                  <source>src/test/groovy</source>-->
+<!--                </sources>-->
+<!--              </configuration>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>flatten-maven-plugin</artifactId>
+          <version>${flatten-maven-plugin.version}</version>
+          <configuration>
+            <flattenMode>resolveCiFriendliesOnly</flattenMode>
+            <pomElements>
+              <!-- Override default settings from org.codehaus.mojo.flatten.FlattenMode -->
+              <artifactId>resolve</artifactId>
+              <groupId>resolve</groupId>
+              <version>resolve</version>
+            </pomElements>
+            <updatePomFile>true</updatePomFile>
+          </configuration>
+          <executions>
+            <execution>
+              <id>process-resources</id>
+              <phase>process-resources</phase>
+              <goals>
+                <goal>flatten</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>clean</id>
+              <phase>clean</phase>
+              <goals>
+                <goal>clean</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+<!--        <plugin>-->
+<!--          <groupId>org.codehaus.mojo</groupId>-->
+<!--          <artifactId>javacc-maven-plugin</artifactId>-->
+<!--          <version>${javacc-maven-plugin.version}</version>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>javacc</id>-->
+<!--              <goals>-->
+<!--                <goal>javacc</goal>-->
+<!--              </goals>-->
+<!--              <configuration>-->
+<!--                <outputDirectory>target/generated-sources/java</outputDirectory>-->
+<!--              </configuration>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
+<!--        <plugin>-->
+<!--          <groupId>org.hibernate.orm.tooling</groupId>-->
+<!--          <artifactId>hibernate-enhance-maven-plugin</artifactId>-->
+<!--          <version>${hibernate.version}</version>-->
+<!--        </plugin>-->
+
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <configuration>
+            <mainClass>${start-class}</mainClass>
+          </configuration>
+          <executions>
+            <execution>
+              <id>build-info</id>
+              <goals>
+                <goal>build-info</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>repackage</id>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>repackage exe</id>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+              <configuration>
+                <classifier>exe</classifier>
+                <executable>true</executable>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+  <repositories>
+    <repository>
+      <id>GBSCAD</id>
+      <url>https://pkgs.dev.azure.com/mclm/_packaging/GBSCAD/maven/v1</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <scm>
+    <url>https://dev.azure.com/mclm/GBS%20CAD/_git/LabStatusPro_App</url>
+  </scm>
+
+</project>
