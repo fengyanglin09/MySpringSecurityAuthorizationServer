@@ -1,11 +1,19 @@
-version: "3"
+version: '3.9'
+
 services:
   postgres:
-    image: postgres
+    image: postgres:15
+    container_name: postgres-container
     restart: always
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: test-db
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: test
     ports:
-      - 5432:5432
+      - "5432:5432"
+    volumes:
+      - /Users/m245951/Documents/MayoProjects/gcp/Spring-Boot-Study-Starters/pro-spring-boot-3/000podman-compose/dataStorage/:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+    driver: local

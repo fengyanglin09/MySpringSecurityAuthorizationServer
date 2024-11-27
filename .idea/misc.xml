@@ -18,6 +18,7 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AzureSecurityBackEnd/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Security-Layer/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Data-Layer/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

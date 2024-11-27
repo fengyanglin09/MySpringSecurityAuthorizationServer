@@ -101,7 +101,7 @@
                         <groupId>org.liquibase</groupId>
                         <artifactId>liquibase-maven-plugin</artifactId>
                         <configuration>
-                            <url>jdbc:postgresql://localhost:5432/lsp-web-d_db</url>
+                            <url>jdbc:postgresql://localhost:5432/test</url>
                             <migrationSqlOutputFile>target/liquibase/update-dev.sql</migrationSqlOutputFile>
                         </configuration>
                     </plugin>
