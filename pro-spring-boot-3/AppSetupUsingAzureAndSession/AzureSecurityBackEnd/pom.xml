@@ -19,6 +19,7 @@
   </parent>
 
   <modules>
+    <module>Data-Layer</module>
     <module>Security-Layer</module>
     <module>Api-Layer</module>
   </modules>
@@ -27,6 +28,8 @@
     <revision>1.0.0</revision>
     <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/flatten-maven-plugin -->
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
+    <!-- https://mvnrepository.com/artifact/com.querydsl/querydsl-apt -->
+    <querydsl.version>5.1.0</querydsl.version>
   </properties>
 
   <dependencyManagement>
@@ -53,6 +56,21 @@
         <version>6.21.0</version>
       </dependency>
 
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>${querydsl.version}</version>
+        <classifier>jakarta</classifier>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <classifier>jakarta</classifier>
+        <version>${querydsl.version}</version>
+      </dependency>
+
     </dependencies>
   </dependencyManagement>
 
@@ -63,54 +81,7 @@
 
     <pluginManagement>
       <plugins>
-<!--        <plugin>-->
-<!--          <groupId>com.github.eirslett</groupId>-->
-<!--          <artifactId>frontend-maven-plugin</artifactId>-->
-<!--          <version>${frontend-maven-plugin.version}</version>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <groupId>io.github.git-commit-id</groupId>-->
-<!--          <artifactId>git-commit-id-maven-plugin</artifactId>-->
-<!--          <configuration>-->
-<!--            <commitIdGenerationMode>full</commitIdGenerationMode>-->
-<!--            <dateFormat>yyyy-MM-dd'T'HH:mm:ss.SSS'Z'</dateFormat>-->
-<!--            <generateGitPropertiesFile>true</generateGitPropertiesFile>-->
-<!--            <generateGitPropertiesFilename>target/classes/git.properties</generateGitPropertiesFilename>-->
-<!--            <verbose>true</verbose>-->
-<!--            <includeOnlyProperties>-->
-<!--              <includeOnlyProperty>^git.branch$</includeOnlyProperty>-->
-<!--              <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>-->
-<!--              <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>-->
-<!--              <includeOnlyProperty>^git.commit.message.(full|short)$</includeOnlyProperty>-->
-<!--              <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>-->
-<!--              <includeOnlyProperty>^git.remote.origin.url$</includeOnlyProperty>-->
-<!--            </includeOnlyProperties>-->
-<!--          </configuration>-->
-<!--          <executions>-->
-<!--            <execution>-->
-<!--              <id>revision</id>-->
-<!--              <goals>-->
-<!--                <goal>revision</goal>-->
-<!--              </goals>-->
-<!--              <phase>initialize</phase>-->
-<!--            </execution>-->
-<!--          </executions>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <groupId>org.apache.maven.plugins</groupId>-->
-<!--          <artifactId>maven-failsafe-plugin</artifactId>-->
-<!--          <executions>-->
-<!--            <execution>-->
-<!--              <goals>-->
-<!--                <goal>integration-test</goal>-->
-<!--                <goal>verify</goal>-->
-<!--              </goals>-->
-<!--            </execution>-->
-<!--          </executions>-->
-<!--          <configuration>-->
-<!--            <classesDirectory>target/classes</classesDirectory>-->
-<!--          </configuration>-->
-<!--        </plugin>-->
+
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -136,24 +107,7 @@
             </execution>
           </executions>
         </plugin>
-<!--        <plugin>-->
-<!--          <groupId>org.codehaus.mojo</groupId>-->
-<!--          <artifactId>build-helper-maven-plugin</artifactId>-->
-<!--          <executions>-->
-<!--            <execution>-->
-<!--              <id>process-test-sources</id>-->
-<!--              <phase>process-test-sources</phase>-->
-<!--              <goals>-->
-<!--                <goal>add-test-source</goal>-->
-<!--              </goals>-->
-<!--              <configuration>-->
-<!--                <sources>-->
-<!--                  <source>src/test/groovy</source>-->
-<!--                </sources>-->
-<!--              </configuration>-->
-<!--            </execution>-->
-<!--          </executions>-->
-<!--        </plugin>-->
+
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>flatten-maven-plugin</artifactId>
@@ -185,27 +139,6 @@
             </execution>
           </executions>
         </plugin>
-<!--        <plugin>-->
-<!--          <groupId>org.codehaus.mojo</groupId>-->
-<!--          <artifactId>javacc-maven-plugin</artifactId>-->
-<!--          <version>${javacc-maven-plugin.version}</version>-->
-<!--          <executions>-->
-<!--            <execution>-->
-<!--              <id>javacc</id>-->
-<!--              <goals>-->
-<!--                <goal>javacc</goal>-->
-<!--              </goals>-->
-<!--              <configuration>-->
-<!--                <outputDirectory>target/generated-sources/java</outputDirectory>-->
-<!--              </configuration>-->
-<!--            </execution>-->
-<!--          </executions>-->
-<!--        </plugin>-->
-<!--        <plugin>-->
-<!--          <groupId>org.hibernate.orm.tooling</groupId>-->
-<!--          <artifactId>hibernate-enhance-maven-plugin</artifactId>-->
-<!--          <version>${hibernate.version}</version>-->
-<!--        </plugin>-->
 
         <plugin>
           <groupId>org.springframework.boot</groupId>

@@ -2,16 +2,6 @@
 server:
   port: 8080
 
-#logging:
-#  level:
-#    # Enable debug-level logging for Spring Security
-#    org.springframework.security: DEBUG
-#
-#    # Enable logging for specific components (optional)
-#    org.springframework.security.authentication: DEBUG
-#    org.springframework.security.web.authentication: DEBUG
-#    org.springframework.security.web.authentication.logout: DEBUG
-#    org.springframework.security.config: DEBUG
 
 
 spring:
@@ -28,6 +18,11 @@ spring:
 app-landing-page:
   name: 'app-main-page'
   url: 'http://localhost:4200/'
+
+
+
+
+
 
 #spring:
 #

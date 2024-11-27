@@ -1,0 +1,48 @@
+logging:
+  level:
+    ROOT: ERROR
+    diy.mqml: INFO  #making sure only errors from this directory are tracked
+    org.hibernate: INFO
+    org.hibernate.type: WARN
+    org.hibernate.type.descriptor.sql: WARN
+    org.hibernate.SQL: WARN
+    org.hibernate.SQL_SLOW: WARN
+    org.springframework.orm.jpa: WARN
+    org.springframework.security: WARN
+    org.springframework.security.web: WARN
+
+server:
+  error:
+    include-message: always
+    include-stacktrace: never
+  servlet:
+    session:
+      timeout: 9H
+      persistent: false
+
+spring:
+  datasource:
+    username: ""
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false #flip to true only for debugging purpose
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+  liquibase:
+    enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+logging:
+  level:
+    ROOT: INFO
+    diy.mqml: DEBUG

@@ -1,0 +1,2905 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="20240117-1" author="m284532">
+        <createTable tableName="app_user">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_appuser"/>
+            </column>
+            <column computed="false" name="email_address" type="varchar(100)"/>
+            <column computed="false" name="lan_id" type="varchar(100)">
+                <constraints unique="true" uniqueConstraintName="unique_user_lanid"/>
+            </column>
+            <column computed="false" name="first_name" type="varchar(100)"/>
+            <column computed="false" name="last_name" type="varchar(100)"/>
+            <column computed="false" name="full_name" type="varchar(255)"/>
+            <column computed="false" name="version" type="int" defaultValue="0"/>
+            <column computed="false" name="access_date_time" type="datetime"/>
+            <column computed="false" name="department" type="varchar(255)"/>
+            <column computed="false" name="job_title" type="varchar(255)"/>
+            <column computed="false" name="photo" type="bytea"/>
+        </createTable>
+        <createTable tableName="app_user_role">
+            <column computed="true" name="id" type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_appuserrole"/>
+            </column>
+            <column computed="false" name="app_user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_appuserrole_appuser" references="app_user(id)"/>
+            </column>
+            <column computed="false" name="role" type="varchar(25)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240117-2" author="m284532">
+        <createTable tableName="app_user_access">
+            <column computed="false" name="app_user_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_appuseraccess_appuser" references="app_user(id)"/>
+            </column>
+            <column computed="false" name="access_date_time" type="datetime"/>
+        </createTable>
+    </changeSet>
+<!--    <changeSet id="20240417-1" author="m284532">-->
+<!--        <sql>-->
+<!--            <![CDATA[-->
+<!--                CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;-->
+<!--            ]]>-->
+<!--        </sql>-->
+<!--    </changeSet>-->
+    <changeSet id="20240215-1" author="m284532">
+        <createTable tableName="app_property">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_appproperty"/>
+            </column>
+            <column computed="false" name="prop_key" type="varchar(255)">
+                <constraints unique="true" uniqueConstraintName="appproperty_propertykey"/>
+            </column>
+            <column computed="false" name="prop_value" type="varchar(2500)"/>
+            <column computed="false" name="description" type="varchar(255)"/>
+            <column computed="false" name="change_date_time" type="datetime"/>
+            <column computed="false" name="changed_by" type="bigint"/>
+            <column computed="false" name="version" type="int"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240215-2" author="m284532" dbms="postgresql">
+        <insert tableName="app_property">
+            <column name="prop_key" value="WEB_HELP_TICKET_URL"/>
+            <column name="prop_value" value="https://mcsm.service-now.com/serviceconnect?id=sc_cat_item_guide&amp;sys_id=5d3aa41387cacd900d4011783cbb359c&amp;sysparm_category=3c0d800bdb0560d49986166e1396190a"/>
+            <column name="description" value="Service Now URL for Help Ticket"/>
+            <column name="change_date_time" value="now()"/>
+            <column name="changed_by" value="1"/>
+            <column name="version" value="1"/>
+        </insert>
+        <insert tableName="app_property">
+            <column name="prop_key" value="WEB_USER_MANUAL_URL"/>
+            <column name="prop_value" value=""/>
+            <column name="description" value="Web Manual URL for LabStatus Pro"/>
+            <column name="change_date_time" value="now()"/>
+            <column name="changed_by" value="1"/>
+            <column name="version" value="1"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20240320-1" author="m284532">
+        <createTable tableName="sample">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_sample"/>
+            </column>
+            <column computed="false" name="soft_lab_order_number" type="varchar(255)"/>
+            <column computed="false" name="soft_gis_order_number" type="varchar(255)"/>
+            <column computed="false" name="soft_path_dx" type="varchar(255)"/>
+            <column computed="false" name="test_code" type="varchar(255)"/>
+            <column computed="false" name="test_order_date" type="datetime"/>
+            <column computed="false" name="patient_last_name" type="varchar(255)"/>
+            <column computed="false" name="patient_first_name" type="varchar(255)"/>
+            <column computed="false" name="patient_clinic_number" type="varchar(255)"/>
+            <column computed="false" name="patient_dob" type="date"/>
+            <column computed="false" name="test_current_status" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240405-1" author="m284532">
+        <createTable tableName="workflow">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_workflow"/>
+            </column>
+            <column computed="false" name="title" type="varchar(255)"/>
+            <column computed="false" name="description" type="varchar(255)"/>
+            <column computed="false" name="department" type="varchar(255)"/>
+            <column computed="false" name="terminate_after_hours" type="integer"/>
+            <column computed="false" name="test_code" type="varchar(255)"/>
+            <column computed="false" name="updated_on" type="datetime"/>
+            <column computed="false" name="updated_by" type="bigint"/>
+            <column computed="false" name="created_on" type="datetime"/>
+            <column computed="false" name="created_by" type="bigint"/>
+            <column computed="false" name="status" type="varchar(100)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20240411-1" author="m284532">
+        <createTable tableName="legend">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_legend"/>
+            </column>
+            <column computed="false" name="legend_key" type="varchar(100)">
+                <constraints unique="true" uniqueConstraintName="legend_legendkey"/>
+            </column>
+            <column computed="false" name="display_name" type="varchar(255)"/>
+            <column computed="false" name="color" type="varchar(255)"/>
+            <column computed="false" name="background_color" type="varchar(255)"/>
+            <column computed="false" name="style" type="varchar(255)"/>
+            <column computed="false" name="style_class" type="varchar(255)"/>
+            <column computed="false" name="ordinal" type="int"/>
+            <column computed="false" name="updated_on" type="datetime"/>
+            <column computed="false" name="updated_by" type="bigint"/>
+            <column computed="false" name="created_on" type="datetime"/>
+            <column computed="false" name="created_by" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="20240422-1" author="m284532">
+        <createTable tableName="test">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk-test"/>
+            </column>
+            <column name="code" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="created_on" type="datetime"/>
+            <column name="created_by" type="bigint"/>
+        </createTable>
+
+        <createTable tableName="workflow_test">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk-workflow_test"/>
+            </column>
+            <column name="workflow_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="test_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="workflow_test" baseColumnNames="workflow_id"
+                                 constraintName="fk_workflow_test_workflow_id"
+                                 referencedTableName="workflow"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="workflow_test" baseColumnNames="test_id"
+                                 constraintName="fk_workflow_test_test_id"
+                                 referencedTableName="test"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240426-1" author="m284532">
+        <dropColumn schemaName="public" tableName="workflow" columnName="test_code"/>
+        <addColumn schemaName="public" tableName="workflow">
+            <column name="retired_on" type="datetime"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="20240524-1" author="m185844">
+        <!-- Add system user -->
+        <insert tableName="app_user">
+            <column name="email_address" value="lsp@mayo.edu"/>
+            <column name="lan_id" value="system"/>
+            <column name="first_name" value="System"/>
+            <column name="last_name" value="System"/>
+            <column name="full_name" value="System"/>
+            <column name="version" value="1"/>
+        </insert>
+
+        <!-- Update app_property table -->
+        <modifyDataType schemaName="public" tableName="app_property"
+                        columnName="description" newDataType="varchar(1000)"/>
+        <addColumn schemaName="public" tableName="app_property">
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_app_property_created_by"
+                                 baseTableName="app_property" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_app_property_updated_by"
+                                 baseTableName="app_property" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <dropColumn schemaName="public" tableName="app_property">
+            <column name="change_date_time"/>
+            <column name="changed_by"/>
+        </dropColumn>
+        <delete schemaName="public" tableName="app_property">
+            <where>1=1</where>
+        </delete>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="WEB_HELP_TICKET_URL"/>
+            <column name="prop_value" value="https://mcsm.service-now.com/serviceconnect?id=sc_cat_item_guide&amp;sys_id=5d3aa41387cacd900d4011783cbb359c&amp;sysparm_category=3c0d800bdb0560d49986166e1396190a"/>
+            <column name="description" value="Service Now URL for Help Ticket"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="WEB_USER_MANUAL_URL"/>
+            <!-- Use RoQCM as a place holder -->
+            <column name="prop_value" value="https://mc.title21.com/DocDisplay/ShowPdfPage?DocNo=DLMPIM.UM-62259"/>
+            <column name="description" value="Web Manual URL for LabStatus Pro"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Update legend table -->
+        <renameColumn schemaName="public" tableName="legend"
+                      oldColumnName="created_by" newColumnName="created_by_prev"/>
+        <renameColumn schemaName="public" tableName="legend"
+                      oldColumnName="created_on" newColumnName="created_on_prev"/>
+        <renameColumn schemaName="public" tableName="legend"
+                      oldColumnName="updated_by" newColumnName="updated_by_prev"/>
+        <renameColumn schemaName="public" tableName="legend"
+                      oldColumnName="updated_on" newColumnName="updated_on_prev"/>
+        <addColumn schemaName="public" tableName="legend">
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+        </addColumn>
+        <update schemaName="public" tableName="legend">
+            <column name="created_by" valueComputed="created_by_prev"/>
+            <column name="created_on" valueComputed="created_on_prev"/>
+            <column name="updated_by" valueComputed="updated_by_prev"/>
+            <column name="updated_on" valueComputed="updated_on_prev"/>
+            <where>1=1</where>
+        </update>
+        <addForeignKeyConstraint constraintName="fk_legend_created_by"
+                                 baseTableName="legend" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_legend_updated_by"
+                                 baseTableName="legend" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <dropColumn schemaName="public" tableName="legend">
+            <column name="created_by_prev"/>
+            <column name="created_on_prev"/>
+            <column name="updated_by_prev"/>
+            <column name="updated_on_prev"/>
+        </dropColumn>
+
+        <!-- Update test table -->
+        <renameColumn schemaName="public" tableName="test"
+                      oldColumnName="created_by" newColumnName="created_by_prev"/>
+        <renameColumn schemaName="public" tableName="test"
+                      oldColumnName="created_on" newColumnName="created_on_prev"/>
+        <renameColumn schemaName="public" tableName="test"
+                      oldColumnName="updated_by" newColumnName="updated_by_prev"/>
+        <renameColumn schemaName="public" tableName="test"
+                      oldColumnName="updated_on" newColumnName="updated_on_prev"/>
+        <addColumn schemaName="public" tableName="test">
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </addColumn>
+        <update schemaName="public" tableName="test">
+            <column name="created_by" valueComputed="created_by_prev"/>
+            <column name="created_on" valueComputed="created_on_prev"/>
+            <column name="updated_by" valueComputed="updated_by_prev"/>
+            <column name="updated_on" valueComputed="updated_on_prev"/>
+            <where>1=1</where>
+        </update>
+        <addForeignKeyConstraint constraintName="fk_test_created_by"
+                                 baseTableName="test" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_test_updated_by"
+                                 baseTableName="test" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_test_retired_by"
+                                 baseTableName="test" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <dropColumn schemaName="public" tableName="test">
+            <column name="created_by_prev"/>
+            <column name="created_on_prev"/>
+            <column name="updated_by_prev"/>
+            <column name="updated_on_prev"/>
+        </dropColumn>
+
+        <!-- Create entity_type table -->
+        <createTable tableName="entity_type">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity_type"/>
+            </column>
+            <column name="title" type="varchar(50)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_type_created_by"
+                                 baseTableName="entity_type" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_type_updated_by"
+                                 baseTableName="entity_type" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_type_retired_by"
+                                 baseTableName="entity_type" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <insert tableName="entity_type">
+            <column name="title" value="SAMPLE_SOFT"/>
+            <column name="description" value="Sample originating from SOFT"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Update workflow table -->
+        <modifyDataType schemaName="public" tableName="workflow"
+                        columnName="description" newDataType="varchar(1000)"/>
+        <renameColumn schemaName="public" tableName="workflow"
+                      oldColumnName="created_by" newColumnName="created_by_prev"/>
+        <renameColumn schemaName="public" tableName="workflow"
+                      oldColumnName="created_on" newColumnName="created_on_prev"/>
+        <renameColumn schemaName="public" tableName="workflow"
+                      oldColumnName="updated_by" newColumnName="updated_by_prev"/>
+        <renameColumn schemaName="public" tableName="workflow"
+                      oldColumnName="updated_on" newColumnName="updated_on_prev"/>
+        <renameColumn schemaName="public" tableName="workflow"
+                      oldColumnName="retired_on" newColumnName="retired_on_prev"/>
+        <addColumn schemaName="public" tableName="workflow">
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+            <column name="entity_type_id" type="bigint"/>
+        </addColumn>
+        <update schemaName="public" tableName="workflow">
+            <column name="created_by" valueComputed="created_by_prev"/>
+            <column name="created_on" valueComputed="created_on_prev"/>
+            <column name="updated_by" valueComputed="updated_by_prev"/>
+            <column name="updated_on" valueComputed="updated_on_prev"/>
+            <column name="retired_on" valueComputed="retired_on_prev"/>
+            <where>1=1</where>
+        </update>
+        <addForeignKeyConstraint constraintName="fk_workflow_created_by"
+                                 baseTableName="workflow" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_workflow_updated_by"
+                                 baseTableName="workflow" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_workflow_retired_by"
+                                 baseTableName="workflow" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_workflow_entity_type"
+                                 baseTableName="workflow" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <dropColumn schemaName="public" tableName="workflow">
+            <column name="created_by_prev"/>
+            <column name="created_on_prev"/>
+            <column name="updated_by_prev"/>
+            <column name="updated_on_prev"/>
+            <column name="retired_on_prev"/>
+        </dropColumn>
+
+        <!-- Create milestone table -->
+        <createTable tableName="milestone">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_milestone"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_milestone_entity_type"
+                                 baseTableName="milestone" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_created_by"
+                                 baseTableName="milestone" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_updated_by"
+                                 baseTableName="milestone" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_retired_by"
+                                 baseTableName="milestone" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Create activity table -->
+        <createTable tableName="activity">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_activity"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_activity_entity_type"
+                                 baseTableName="activity" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_activity_created_by"
+                                 baseTableName="activity" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_activity_updated_by"
+                                 baseTableName="activity" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_activity_retired_by"
+                                 baseTableName="activity" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Create workflow_activity table -->
+        <createTable tableName="workflow_activity">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_workflow_activity"/>
+            </column>
+            <column name="workflow_id" type="bigint"/>
+            <column name="activity_id" type="bigint"/>
+            <column name="ordinal" type="integer"/>
+            <column name="optional" type="boolean"/>
+            <column name="terminal" type="boolean"/>
+            <column name="estimated_duration" type="numeric"/>
+            <column name="exceeded_duration" type="numeric"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_workflow_activity_workflow_id"
+                                 baseTableName="workflow_activity" baseColumnNames="workflow_id"
+                                 referencedTableName="workflow" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_workflow_activity_activity_id"
+                                 baseTableName="workflow_activity" baseColumnNames="activity_id"
+                                 referencedTableName="activity" referencedColumnNames="id"/>
+
+        <!-- Create activity_milestone table -->
+        <createTable tableName="activity_milestone">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_activity_milestone"/>
+            </column>
+            <column name="activity_id" type="bigint"/>
+            <column name="milestone_id" type="bigint"/>
+            <column name="type" type="varchar(10)"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_activity_milestone_activity_id"
+                                 baseTableName="activity_milestone" baseColumnNames="activity_id"
+                                 referencedTableName="activity" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_activity_milestone_milestone_id"
+                                 baseTableName="activity_milestone" baseColumnNames="milestone_id"
+                                 referencedTableName="milestone" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240601-1" author="m284532">
+        <addUniqueConstraint    tableName="workflow"
+                                columnNames="title"
+                                constraintName="unique_workflow_title"
+                                schemaName="public"/>
+    </changeSet>
+    <changeSet id="20240604-1" author="m284532">
+        <createTable tableName="entity">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="key" type="varchar(1000)"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_created_by"
+                                 baseTableName="entity" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_updated_by"
+                                 baseTableName="entity" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_entity_type_id"
+                                 baseTableName="entity" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240604-2" author="m284532">
+        <createTable tableName="field">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_field"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="title" type="varchar(100)"/>
+            <column name="description" type="varchar(500)"/>
+            <column name="field_type" type="varchar(100)"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_field_created_by"
+                                 baseTableName="field" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_field_updated_by"
+                                 baseTableName="field" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_field_entity_type_id"
+                                 baseTableName="field" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240604-3" author="m284532">
+        <createTable tableName="entity_field">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity_field"/>
+            </column>
+            <column name="entity_id" type="bigint"/>
+            <column name="field_id" type="bigint"/>
+            <column name="name" type="varchar(100)"/>
+            <column name="string_value" type="varchar(1000)"/>
+            <column name="number_value" type="bigint"/>
+            <column name="date_value" type="date"/>
+            <column name="date_time_value" type="datetime"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_field_created_by"
+                                 baseTableName="entity_field" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_field_updated_by"
+                                 baseTableName="entity_field" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_field_entity_id"
+                                 baseTableName="entity_field" baseColumnNames="entity_id"
+                                 referencedTableName="entity" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_field_field_id"
+                                 baseTableName="entity_field" baseColumnNames="field_id"
+                                 referencedTableName="field" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240608-1" author="m284532">
+        <addUniqueConstraint constraintName="unique_field_entity_title"
+                             tableName="field"
+                             columnNames="entity_type_id, title"/>
+    </changeSet>
+    <changeSet id="20240608-2" author="m284532">
+        <addColumn tableName="entity">
+            <column name="status" type="varchar(100)" ></column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="20240608-3" author="m284532">
+        <addUniqueConstraint constraintName="unique_entity_type_title"
+                             tableName="entity_type"
+                             columnNames="title"/>
+    </changeSet>
+    <changeSet id="20240627-1" author="m284532">
+        <createTable tableName="entity_milestone">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity_milestone"/>
+            </column>
+            <column name="entity_id" type="bigint"/>
+            <column name="milestone_id" type="bigint"/>
+            <column name="milestone_key" type="varchar(100)"/>
+            <column name="time" type="datetime"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_milestone_created_by"
+                                 baseTableName="entity_milestone" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_milestone_entity_id"
+                                 baseTableName="entity_milestone" baseColumnNames="entity_id"
+                                 referencedTableName="entity" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_milestone_milestone_id"
+                                 baseTableName="entity_milestone" baseColumnNames="milestone_id"
+                                 referencedTableName="milestone" referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20240701-1" author="m185844">
+        <addColumn schemaName="public" tableName="sample">
+            <column name="test_current_status_description" type="varchar(1000)"/>
+            <column name="soft_order_number" type="varchar(255)"/>
+            <column name="soft_molecular_sample_id" type="varchar(255)"/>
+            <column name="entity_id" type="bigint"/>
+            <column name="soft_order_key" type="bigint"/>
+            <column name="soft_test_key" type="bigint"/>
+            <column name="soft_specimen_key" type="bigint"/>
+            <column name="soft_tube_key" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_sample_entity"
+                                 baseTableName="sample" baseColumnNames="entity_id"
+                                 referencedTableName="entity" referencedColumnNames="id"/>
+
+        <dropColumn schemaName="public" tableName="entity" columnName="status"/>
+    </changeSet>
+    <changeSet id="20240719-1" author="m284532">
+        <sql dbms="postgresql">
+            <![CDATA[
+            CREATE OR REPLACE VIEW public.average_test_days AS
+            select dataset.test_code, round(avg(days)) as average_value, mode() WITHIN GROUP ( ORDER BY days ) as mode_value, round(percentile_cont(0.5) WITHIN GROUP ( ORDER BY  days )) as median_value
+            from (select s.test_code, s.entity_id, min(time), max(time), EXTRACT(DAY FROM max(time)-min(time)) as days
+                from sample s join entity_milestone em on s.entity_id = em.entity_id
+                where s.test_current_status = 'Completed'
+                group by s.test_code, s.entity_id) as dataset
+            GROUP BY test_code;
+            ]]>
+        </sql>
+    </changeSet>
+    <changeSet id="20240724-1" author="m284532">
+        <addColumn schemaName="public" tableName="workflow">
+            <column name="sla_in_days" type="int" defaultValue="0"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="20240815-1" author="m185844">
+        <!-- Update sample table (remove obsolete columns, organize remaining columns) -->
+        <dropColumn schemaName="public" tableName="sample">
+            <column name="soft_molecular_sample_id"/>
+            <column name="soft_specimen_key"/>
+            <column name="soft_tube_key"/>
+        </dropColumn>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="soft_lab_order_number" newColumnName="soft_lab_order_number_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="soft_gis_order_number" newColumnName="soft_gis_order_number_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="soft_path_dx" newColumnName="soft_path_dx_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="test_code" newColumnName="test_code_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="test_order_date" newColumnName="test_order_date_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="patient_last_name" newColumnName="patient_last_name_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="patient_first_name" newColumnName="patient_first_name_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="patient_clinic_number" newColumnName="patient_clinic_number_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="patient_dob" newColumnName="patient_dob_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="test_current_status" newColumnName="test_current_status_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="test_current_status_description" newColumnName="test_current_status_description_prev"/>
+        <renameColumn schemaName="public" tableName="sample"
+                      oldColumnName="soft_order_number" newColumnName="soft_order_number_prev"/>
+        <addColumn schemaName="public" tableName="sample">
+            <column name="soft_order_number" type="varchar(255)"/>
+            <column name="soft_lab_order_number" type="varchar(255)"/>
+            <column name="soft_gis_order_number" type="varchar(255)"/>
+            <column name="soft_path_dx" type="varchar(255)"/>
+            <column name="test_code" type="varchar(255)"/>
+            <column name="test_order_date" type="datetime"/>
+            <column name="patient_last_name" type="varchar(255)"/>
+            <column name="patient_first_name" type="varchar(255)"/>
+            <column name="patient_clinic_number" type="varchar(255)"/>
+            <column name="patient_dob" type="date"/>
+            <column name="test_current_status" type="varchar(255)"/>
+            <column name="test_current_status_description" type="varchar(1000)"/>
+        </addColumn>
+        <update schemaName="public" tableName="sample">
+            <column name="soft_order_number" valueComputed="soft_order_number_prev"/>
+            <column name="soft_lab_order_number" valueComputed="soft_lab_order_number_prev"/>
+            <column name="soft_gis_order_number" valueComputed="soft_gis_order_number_prev"/>
+            <column name="soft_path_dx" valueComputed="soft_path_dx_prev"/>
+            <column name="test_code" valueComputed="test_code_prev"/>
+            <column name="test_order_date" valueComputed="test_order_date_prev"/>
+            <column name="patient_last_name" valueComputed="patient_last_name_prev"/>
+            <column name="patient_first_name" valueComputed="patient_first_name_prev"/>
+            <column name="patient_clinic_number" valueComputed="patient_clinic_number_prev"/>
+            <column name="patient_dob" valueComputed="patient_dob_prev"/>
+            <column name="test_current_status" valueComputed="test_current_status_prev"/>
+            <column name="test_current_status_description" valueComputed="test_current_status_description_prev"/>
+            <where>1=1</where>
+        </update>
+        <sql dbms="postgresql">
+            <![CDATA[
+            CREATE OR REPLACE VIEW public.average_test_days AS
+            select dataset.test_code, round(avg(days)) as average_value, mode() WITHIN GROUP ( ORDER BY days ) as mode_value, round(percentile_cont(0.5) WITHIN GROUP ( ORDER BY  days )) as median_value
+            from (select s.test_code, s.entity_id, min(time), max(time), EXTRACT(DAY FROM max(time)-min(time)) as days
+                from sample s join entity_milestone em on s.entity_id = em.entity_id
+                where s.test_current_status = 'Completed'
+                group by s.test_code, s.entity_id) as dataset
+            GROUP BY test_code;
+            ]]>
+        </sql>
+        <dropColumn schemaName="public" tableName="sample">
+            <column name="soft_lab_order_number_prev"/>
+            <column name="soft_gis_order_number_prev"/>
+            <column name="soft_path_dx_prev"/>
+            <column name="test_code_prev"/>
+            <column name="test_order_date_prev"/>
+            <column name="patient_last_name_prev"/>
+            <column name="patient_first_name_prev"/>
+            <column name="patient_clinic_number_prev"/>
+            <column name="patient_dob_prev"/>
+            <column name="test_current_status_prev"/>
+            <column name="test_current_status_description_prev"/>
+            <column name="soft_order_number_prev"/>
+        </dropColumn>
+    </changeSet>
+    <changeSet id="20240912-1" author="m108491">
+        <dropColumn tableName="workflow_activity" columnName="estimated_duration"/>
+    </changeSet>
+    <changeSet id="20240913-1" author="m185844">
+        <createTable tableName="loader_job">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_loader_job"/>
+            </column>
+            <column name="type" type="varchar(100)"/>
+            <column name="title" type="varchar(200)"/>
+            <column name="status" type="varchar(20)"/>
+            <column name="message" type="varchar(1000)"/>
+            <column name="started_on" type="datetime"/>
+            <column name="stopped_on" type="datetime"/>
+        </createTable>
+
+        <createTable tableName="loader_task">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_loader_task"/>
+            </column>
+            <column name="loader_job_id" type="bigint"/>
+            <column name="type" type="varchar(100)"/>
+            <column name="title" type="varchar(200)"/>
+            <column name="status" type="varchar(20)"/>
+            <column name="message" type="varchar(1000)"/>
+            <column name="started_on" type="datetime"/>
+            <column name="stopped_on" type="datetime"/>
+            <column name="loaded_count" type="int"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_loader_task_loader_job_id"
+                                 baseTableName="loader_task" baseColumnNames="loader_job_id"
+                                 referencedTableName="loader_job" referencedColumnNames="id"/>
+
+        <dropTable schemaName="public" tableName="entity_field"/>
+        <dropTable schemaName="public" tableName="field"/>
+
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_SEARCH_MILESTONE_DAYS"/>
+            <column name="prop_value" value="7"/>
+            <column name="description" value="Number of days to search back when loading milestones"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_SEARCH_SAMPLE_DAYS"/>
+            <column name="prop_value" value="7"/>
+            <column name="description" value="Number of days to search back when loading samples"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20240913-1" author="m108491">
+        <addColumn schemaName="public" tableName="activity">
+            <column name="activity_name" type="varchar(1000)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet id="20240914-1" author="m284532">
+        <modifyDataType
+            tableName="workflow_activity"
+            columnName="exceeded_duration"
+            schemaName="public"
+            newDataType="integer"/>
+    </changeSet>
+    <changeSet id="20240925-1" author="m185844">
+        <!-- Create note table -->
+        <createTable schemaName="public" tableName="note">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_note"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_note_entity_type"
+                                 baseTableName="note" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_created_by"
+                                 baseTableName="note" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_updated_by"
+                                 baseTableName="note" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_retired_by"
+                                 baseTableName="note" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Initialize note table -->
+        <insert schemaName="public" tableName="note">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="title" value="Note"/>
+            <column name="description" value="General note"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="note">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="title" value="Rerun"/>
+            <column name="description" value="Rerun"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Create entity_note table -->
+        <createTable schemaName="public" tableName="entity_note">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity_note"/>
+            </column>
+            <column name="entity_id" type="bigint"/>
+            <column name="note_id" type="bigint"/>
+            <column name="source" type="varchar(100)"/>
+            <column name="key" type="varchar(100)"/>
+            <column name="text" type="varchar(5000)"/>
+            <column name="author" type="varchar(100)"/>
+            <column name="time" type="datetime"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_note_entity_id"
+                                 baseTableName="entity_note" baseColumnNames="entity_id"
+                                 referencedTableName="entity" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_note_note_id"
+                                 baseTableName="entity_note" baseColumnNames="note_id"
+                                 referencedTableName="milestone" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_entity_note_created_by"
+                                 baseTableName="entity_note" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Update entity_milestone table -->
+        <dropForeignKeyConstraint constraintName="fk_entity_milestone_created_by"
+                                  baseTableName="entity_milestone"/>
+        <renameColumn schemaName="public" tableName="entity_milestone"
+                      oldColumnName="time" newColumnName="time_prev"/>
+        <renameColumn schemaName="public" tableName="entity_milestone"
+                      oldColumnName="created_by" newColumnName="created_by_prev"/>
+        <renameColumn schemaName="public" tableName="entity_milestone"
+                      oldColumnName="created_on" newColumnName="created_on_prev"/>
+        <addColumn schemaName="public" tableName="entity_milestone">
+            <column name="source" type="varchar(100)"/>
+            <column name="key" type="varchar(100)"/>
+            <column name="time" type="datetime"/>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+        </addColumn>
+        <update schemaName="public" tableName="entity_milestone">
+            <column name="key" valueComputed="milestone_key"/>
+            <column name="time" valueComputed="time_prev"/>
+            <column name="created_by" valueComputed="created_by_prev"/>
+            <column name="created_on" valueComputed="created_on_prev"/>
+            <where>1=1</where>
+        </update>
+        <sql dbms="postgresql">
+            <![CDATA[
+            CREATE OR REPLACE VIEW public.average_test_days AS
+            select dataset.test_code, round(avg(days)) as average_value, mode() WITHIN GROUP ( ORDER BY days ) as mode_value, round(percentile_cont(0.5) WITHIN GROUP ( ORDER BY  days )) as median_value
+            from (select s.test_code, s.entity_id, min(time), max(time), EXTRACT(DAY FROM max(time)-min(time)) as days
+                from sample s join entity_milestone em on s.entity_id = em.entity_id
+                where s.test_current_status = 'Completed'
+                group by s.test_code, s.entity_id) as dataset
+            GROUP BY test_code;
+            ]]>
+        </sql>
+        <addForeignKeyConstraint constraintName="fk_entity_milestone_created_by"
+                                 baseTableName="entity_milestone" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <dropColumn schemaName="public" tableName="entity_milestone">
+            <column name="milestone_key"/>
+            <column name="time_prev"/>
+            <column name="created_by_prev"/>
+            <column name="created_on_prev"/>
+        </dropColumn>
+    </changeSet>
+    <changeSet id="20241004-1" author="m108491">
+        <createTable tableName="work_area">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_work_area"/>
+            </column>
+            <column computed="false" name="title" type="varchar(255)"/>
+            <column computed="false" name="description" type="varchar(255)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="updated_on" type="datetime"/>
+            <column computed="false" name="updated_by" type="bigint"/>
+            <column computed="false" name="created_on" type="datetime"/>
+            <column computed="false" name="created_by" type="bigint"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="20241004-1" author="m185844">
+        <!-- Update entity_note constraint -->
+        <dropForeignKeyConstraint constraintName="fk_entity_note_note_id"
+                                  baseTableName="entity_note"/>
+        <addForeignKeyConstraint constraintName="fk_entity_note_note_id"
+                                 baseTableName="entity_note" baseColumnNames="note_id"
+                                 referencedTableName="note" referencedColumnNames="id"/>
+
+        <!-- Update sample status description size -->
+        <modifyDataType schemaName="public" tableName="sample"
+                        columnName="test_current_status_description" newDataType="varchar(4096)"/>
+
+        <!-- Create source table -->
+        <createTable schemaName="public" tableName="source">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_source"/>
+            </column>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="type" type="varchar(100)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_source_created_by"
+                                 baseTableName="source" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_source_updated_by"
+                                 baseTableName="source" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_source_retired_by"
+                                 baseTableName="source" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Initialize source table -->
+        <insert schemaName="public" tableName="source">
+            <column name="title" value="SOFT Prod"/>
+            <column name="description" value="SOFT Production Data"/>
+            <column name="type" value="BIG_QUERY"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="source">
+            <column name="title" value="RoQCM Prod"/>
+            <column name="description" value="RoQCM Production Data"/>
+            <column name="type" value="BIG_QUERY"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="source">
+            <column name="title" value="SIA Prod"/>
+            <column name="description" value="Sample Intake Production Data"/>
+            <column name="type" value="BIG_QUERY"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="source">
+            <column name="title" value="NGSWB Prod"/>
+            <column name="description" value="NGS Workbench Production Data"/>
+            <column name="type" value="BIG_QUERY"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Create milestone_extract table -->
+        <createTable schemaName="public" tableName="milestone_extract">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_milestone_extract"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="definition" type="varchar(5000)"/>
+            <column name="extract_duration" type="numeric"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_milestone_extract_entity_type_id"
+                                 baseTableName="milestone_extract" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_extract_source_id"
+                                 baseTableName="milestone_extract" baseColumnNames="source_id"
+                                 referencedTableName="source" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_extract_created_by"
+                                 baseTableName="milestone_extract" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_extract_updated_by"
+                                 baseTableName="milestone_extract" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_milestone_extract_retired_by"
+                                 baseTableName="milestone_extract" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Populate milestone_extract table -->
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT RV Action History"/>
+            <column name="description" value="Milestone from SOFT RV action history"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Test"/>
+            <column name="description" value="Milestone from SOFT test"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Lab Location"/>
+            <column name="description" value="Milestone from SOFT lab location"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Interpretation"/>
+            <column name="description" value="Milestone from SOFT interpretation action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Requisition"/>
+            <column name="description" value="Milestone from SOFT requisition action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Slide"/>
+            <column name="description" value="Milestone from SOFT slide action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Test"/>
+            <column name="description" value="Milestone from SOFT test action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Tube"/>
+            <column name="description" value="Milestone from SOFT tube action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'RoQCM Prod')"/>
+            <column name="title" value="RoQCM Metric: Sample"/>
+            <column name="description" value="Milestone from RoQCM sample metric"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'RoQCM Prod')"/>
+            <column name="title" value="RoQCM Metric: Sample Run"/>
+            <column name="description" value="Milestone from RoQCM sample run metric"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SIA Prod')"/>
+            <column name="title" value="SIA Submitted Sample: Sample Submitted"/>
+            <column name="description" value="Milestone from SIA submitted sample"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SIA Prod')"/>
+            <column name="title" value="SIA Submitted Sample: Sample Accepted"/>
+            <column name="description" value="Milestone from SIA submitted sample"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <insert schemaName="public" tableName="milestone_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'NGSWB Prod')"/>
+            <column name="title" value="NGSWB Sample Status History"/>
+            <column name="description" value="Milestone from NGSWB sample status history"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Remove source from entity_milestone table -->
+        <dropColumn schemaName="public" tableName="entity_milestone">
+            <column name="source"/>
+        </dropColumn>
+
+        <!-- Associate milestone with milestone_extract -->
+        <addColumn schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_milestone_milestone_extract_id"
+                                 baseTableName="milestone" baseColumnNames="milestone_extract_id"
+                                 referencedTableName="milestone_extract" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="unique_milestone_entity_title"
+                             tableName="milestone"
+                             columnNames="entity_type_id, title"/>
+
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT RV Action History')"/>
+            <where>title IN ('SDSC Receive Start')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Test')"/>
+            <where>title IN ('SDSC Receive Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Lab Location')"/>
+            <where>title IN ('Moltech Accessioning Start', 'Technical Slide Review Start', 'Technical Slide Review Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Action: Interpretation')"/>
+            <where>title IN ('Consultant Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Action: Requisition')"/>
+            <where>title IN ('Moltech Accessioning Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Action: Slide')"/>
+            <where>title IN ('Histology Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Action: Test')"/>
+            <where>title IN ('Consultant Start', 'Genetic Counseler Start', 'Technical Specialist Start', 'Technologist 1 Start')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SOFT Action: Tube')"/>
+            <where>title IN ('AP Path Accessioning Start', 'Extraction Start', 'Extraction Stop', 'Histology Start')</where>
+        </update>
+
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'RoQCM Metric: Sample')"/>
+            <where>title IN ('Technologist 2 Start')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'RoQCM Metric: Sample Run')"/>
+            <where>title IN ('CGSL Library Prep Stop')</where>
+        </update>
+
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SIA Submitted Sample: Sample Submitted')"/>
+            <where>title IN ('Technologist 1 Stop')</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'SIA Submitted Sample: Sample Accepted')"/>
+            <where>title IN ('CGSL Library Prep Start')</where>
+        </update>
+
+        <update schemaName="public" tableName="milestone">
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'NGSWB Sample Status History')"/>
+            <where>title LIKE 'NSG Workbench:%'</where>
+        </update>
+
+        <!-- Create note_extract table -->
+        <createTable schemaName="public" tableName="note_extract">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_note_extract"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="definition" type="varchar(5000)"/>
+            <column name="extract_duration" type="numeric"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_note_extract_entity_type_id"
+                                 baseTableName="note_extract" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_extract_source_id"
+                                 baseTableName="note_extract" baseColumnNames="source_id"
+                                 referencedTableName="source" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_extract_created_by"
+                                 baseTableName="note_extract" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_extract_updated_by"
+                                 baseTableName="note_extract" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint constraintName="fk_note_extract_retired_by"
+                                 baseTableName="note_extract" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+
+        <!-- Populate note_extract table -->
+        <insert schemaName="public" tableName="note_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Note"/>
+            <column name="description" value="Note from SOFT note"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="note_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="SOFT Action: Test"/>
+            <column name="description" value="Note from SOFT test action"/>
+            <column name="definition" value="null"/>
+            <column name="extract_duration" value="86400000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+        <!-- Remove source from entity_note table -->
+        <dropColumn schemaName="public" tableName="entity_note">
+            <column name="source"/>
+        </dropColumn>
+
+        <!-- Associate note with note_extract -->
+        <addColumn schemaName="public" tableName="note">
+            <column name="note_extract_id" type="bigint"/>
+        </addColumn>
+        <addForeignKeyConstraint constraintName="fk_note_note_extract_id"
+                                 baseTableName="note" baseColumnNames="note_extract_id"
+                                 referencedTableName="note_extract" referencedColumnNames="id"/>
+        <addUniqueConstraint constraintName="unique_note_entity_title"
+                             tableName="note"
+                             columnNames="entity_type_id, title"/>
+
+        <update schemaName="public" tableName="note">
+            <column name="note_extract_id" valueComputed="(SELECT id FROM public.note_extract WHERE title = 'SOFT Note')"/>
+            <where>title = 'Note'</where>
+        </update>
+        <update schemaName="public" tableName="note">
+            <column name="note_extract_id" valueComputed="(SELECT id FROM public.note_extract WHERE title = 'SOFT Action: Test')"/>
+            <where>title = 'Rerun'</where>
+        </update>
+
+        <!-- Remove obsolete LOADER_SEARCH_MILESTONE_DAYS app_property -->
+        <delete schemaName="public" tableName="app_property">
+            <where>prop_key = 'LOADER_SEARCH_MILESTONE_DAYS'</where>
+        </delete>
+    </changeSet>
+    <changeSet id="20241010-1" author="m284532">
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="ABOUT_LSP_TEXT"/>
+            <column name="prop_value" value="Add details about the application here"/>
+            <column name="description" value="Add details about the application here"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20241016-1" author="m185844">
+        <!-- Update loader message field sizes -->
+        <modifyDataType schemaName="public" tableName="loader_job"
+                        columnName="message" newDataType="varchar(8192)"/>
+        <modifyDataType schemaName="public" tableName="loader_task"
+                        columnName="message" newDataType="varchar(8192)"/>
+
+        <!-- Update loader message field sizes -->
+        <addUniqueConstraint constraintName="unique_entity_entity_type_key"
+                             tableName="entity"
+                             columnNames="entity_type_id, key"/>
+
+        <!-- Add foreign key indexes: activity -->
+        <createIndex indexName="idx_activity_entity_type"
+                     tableName="activity">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_activity_created_by"
+                     tableName="activity">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_activity_updated_by"
+                     tableName="activity">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_activity_retired_by"
+                     tableName="activity">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: activity_milestone -->
+        <createIndex indexName="idx_activity_milestone_activity"
+                     tableName="activity_milestone">
+            <column name="activity_id"/>
+        </createIndex>
+        <createIndex indexName="idx_activity_milestone_milestone"
+                     tableName="activity_milestone">
+            <column name="milestone_id"/>
+        </createIndex>
+        <!-- Add foreign key indexes: app_user_role -->
+        <createIndex indexName="idx_app_user_role_app_user"
+                     tableName="app_user_role">
+            <column name="app_user_id"/>
+        </createIndex>
+        <!-- Add foreign key indexes: entity -->
+        <createIndex indexName="idx_entity_entity_type"
+                     tableName="entity">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_created_by"
+                     tableName="entity">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_updated_by"
+                     tableName="entity">
+            <column name="updated_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: entity_milestone -->
+        <createIndex indexName="idx_entity_milestone_entity"
+                     tableName="entity_milestone">
+            <column name="entity_id"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_milestone_milestone"
+                     tableName="entity_milestone">
+            <column name="milestone_id"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_milestone_created_by"
+                     tableName="entity_milestone">
+            <column name="created_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: entity_note -->
+        <createIndex indexName="idx_entity_note_entity"
+                     tableName="entity_note">
+            <column name="entity_id"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_note_note"
+                     tableName="entity_note">
+            <column name="note_id"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_note_created_by"
+                     tableName="entity_note">
+            <column name="created_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: entity_type -->
+        <createIndex indexName="idx_entity_type_created_by"
+                     tableName="entity_type">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_type_updated_by"
+                     tableName="entity_type">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_entity_type_retired_by"
+                     tableName="entity_type">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: legend -->
+        <createIndex indexName="idx_legend_created_by"
+                     tableName="legend">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_legend_updated_by"
+                     tableName="legend">
+            <column name="updated_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: loader_task -->
+        <createIndex indexName="idx_loader_task_loader_job"
+                     tableName="loader_task">
+            <column name="loader_job_id"/>
+        </createIndex>
+        <!-- Add foreign key indexes: milestone -->
+        <createIndex indexName="idx_milestone_entity_type"
+                     tableName="milestone">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_milestone_extract"
+                     tableName="milestone">
+            <column name="milestone_extract_id"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_created_by"
+                     tableName="milestone">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_updated_by"
+                     tableName="milestone">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_retired_by"
+                     tableName="milestone">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: milestone_extract -->
+        <createIndex indexName="idx_milestone_extract_entity_type"
+                     tableName="milestone_extract">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_extract_source"
+                     tableName="milestone_extract">
+            <column name="source_id"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_extract_created_by"
+                     tableName="milestone_extract">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_extract_updated_by"
+                     tableName="milestone_extract">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_milestone_extract_retired_by"
+                     tableName="milestone_extract">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: note -->
+        <createIndex indexName="idx_note_entity_type"
+                     tableName="note">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_note_note_extract"
+                     tableName="note">
+            <column name="note_extract_id"/>
+        </createIndex>
+        <createIndex indexName="idx_note_created_by"
+                     tableName="note">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_note_updated_by"
+                     tableName="note">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_note_retired_by"
+                     tableName="note">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: note_extract -->
+        <createIndex indexName="idx_note_extract_entity_type"
+                     tableName="note_extract">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_note_extract_source"
+                     tableName="note_extract">
+            <column name="source_id"/>
+        </createIndex>
+        <createIndex indexName="idx_note_extract_created_by"
+                     tableName="note_extract">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_note_extract_updated_by"
+                     tableName="note_extract">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_note_extract_retired_by"
+                     tableName="note_extract">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: sample -->
+        <createIndex indexName="idx_sample_entity"
+                     tableName="sample">
+            <column name="entity_id"/>
+        </createIndex>
+        <!-- Add foreign key indexes: source -->
+        <createIndex indexName="idx_source_created_by"
+                     tableName="source">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_source_updated_by"
+                     tableName="source">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_source_retired_by"
+                     tableName="source">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: test -->
+        <createIndex indexName="idx_test_created_by"
+                     tableName="test">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_test_updated_by"
+                     tableName="test">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_test_retired_by"
+                     tableName="test">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: work_area -->
+        <createIndex indexName="idx_work_area_created_by"
+                     tableName="work_area">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_work_area_updated_by"
+                     tableName="work_area">
+            <column name="updated_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: workflow -->
+        <createIndex indexName="idx_workflow_entity_type"
+                     tableName="workflow">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <createIndex indexName="idx_workflow_created_by"
+                     tableName="workflow">
+            <column name="created_by"/>
+        </createIndex>
+        <createIndex indexName="idx_workflow_updated_by"
+                     tableName="workflow">
+            <column name="updated_by"/>
+        </createIndex>
+        <createIndex indexName="idx_workflow_retired_by"
+                     tableName="workflow">
+            <column name="retired_by"/>
+        </createIndex>
+        <!-- Add foreign key indexes: workflow_activity -->
+        <createIndex indexName="idx_workflow_activity_workflow"
+                     tableName="workflow_activity">
+            <column name="workflow_id"/>
+        </createIndex>
+        <createIndex indexName="idx_workflow_activity_activity"
+                     tableName="workflow_activity">
+            <column name="activity_id"/>
+        </createIndex>
+        <!-- Add foreign key indexes: workflow_test -->
+        <createIndex indexName="idx_workflow_test_workflow"
+                     tableName="workflow_test">
+            <column name="workflow_id"/>
+        </createIndex>
+        <createIndex indexName="idx_workflow_test_test"
+                     tableName="workflow_test">
+            <column name="test_id"/>
+        </createIndex>
+
+        <!-- Update extract durations to 1 day -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="extract_duration" value="86400000000000"/>
+            <where>1=1</where>
+        </update>
+        <update schemaName="public" tableName="note_extract">
+            <column name="extract_duration" value="86400000000000"/>
+            <where>1=1</where>
+        </update>
+
+
+        <!-- RoQCM Sample Metric Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="RoQCM Metric: Sample"/>
+            <column name="description" value="RoQCM sample metrics"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(SampleEntity.title, 1, 8) AS correlation_key,
+  'RoQCM Sample Run Signoff: Reviewed' AS title,
+  Metric.id AS key,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago') AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` SampleEntity
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` SampleEntityType ON SampleEntityType.id = SampleEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` Metric ON Metric.meteredEntity_id = SampleEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` MetricDefinition ON MetricDefinition.id = Metric.metricDefinition_id
+WHERE SampleEntityType.title = 'sample'
+  AND MetricDefinition.title = 'sample.run.signoff.status' AND Metric.textValue = 'REVIEWED'
+  AND EXISTS (
+	SELECT 1
+	FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` TestCodeMetric
+	INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` TestCodeMetricDefinition ON TestCodeMetricDefinition.id = TestCodeMetric.metricDefinition_id
+	WHERE TestCodeMetric.meteredEntity_id = SampleEntity.id
+	  AND TestCodeMetric.currentValue = 'Y'
+	  AND TestCodeMetricDefinition.title IN ('sample.recipe.title', 'sample.genelist.soft_mnemonic')
+	  AND TestCodeMetric.textValue IN UNNEST(@soft_test_codes)
+  )
+  AND SUBSTRING(SampleEntity.title, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND DATETIME(Metric.createTime, 'America/Chicago') >= @extract_date_time
+ORDER BY Metric.id
+]]>
+            </column>
+            <where>title = 'RoQCM Metric: Sample'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="RoQCM Sample Run Signoff: Reviewed"/>
+            <column name="description" value="Sample run quality signoff reviewed in RoQCM."/>
+            <where>title = 'Technologist 2 Start'</where>
+        </update>
+
+
+        <!-- RoQCM Sample Run Metric Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="RoQCM Metric: Sample Run"/>
+            <column name="description" value="RoQCM sample run metrics"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(SampleEntity.title, 1, 8) AS correlation_key,
+  CASE WHEN MetricDefinition.title = 'run.milestone.sequencing.end' THEN 'RoQCM Sample Sequencing: Stop'
+	   WHEN MetricDefinition.title = 'run.milestone.sequencing.start' THEN 'RoQCM Sample Sequencing: Start'
+	   ELSE '' END AS title,
+  Metric.id AS key,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago') AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` SampleEntity
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` SampleEntityType ON SampleEntityType.id = SampleEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntityRelationships` MeteredEntityRelationships ON MeteredEntityRelationships.entity_id = SampleEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` RunEntity ON RunEntity.id = MeteredEntityRelationships.parentEntity_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` RunEntityType ON RunEntityType.id = RunEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` Metric ON Metric.meteredEntity_id = RunEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` MetricDefinition ON MetricDefinition.id = Metric.metricDefinition_id
+WHERE SampleEntityType.title = 'sample'
+  AND RunEntityType.title = 'run'
+  AND MetricDefinition.title IN ('run.milestone.sequencing.end', 'run.milestone.sequencing.start')
+  AND EXISTS (
+	SELECT 1
+	FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` TestCodeMetric
+	INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` TestCodeMetricDefinition ON TestCodeMetricDefinition.id = TestCodeMetric.metricDefinition_id
+	WHERE TestCodeMetric.meteredEntity_id = SampleEntity.id
+	  AND TestCodeMetric.currentValue = 'Y'
+	  AND TestCodeMetricDefinition.title IN ('sample.recipe.title', 'sample.genelist.soft_mnemonic')
+	  AND TestCodeMetric.textValue IN UNNEST(@soft_test_codes)
+  )
+  AND SUBSTRING(SampleEntity.title, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND DATETIME(Metric.createTime, 'America/Chicago') >= @extract_date_time
+GROUP BY
+  SUBSTRING(SampleEntity.title, 1, 8),
+  Metric.id,
+  MetricDefinition.title,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago')
+ORDER BY Metric.id
+]]>
+            </column>
+            <where>title = 'RoQCM Metric: Sample Run'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="RoQCM Sample Sequencing: Start"/>
+            <column name="description" value="Instrument sequencing started in the pipeline and reported in RoQCM."/>
+            <where>title = 'CGSL Library Prep Stop'</where>
+        </update>
+        <insert schemaName="public" tableName="milestone">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="title" value="RoQCM Sample Sequencing: Stop"/>
+            <column name="description" value="Instrument sequencing stopped in the pipeline and reported in RoQCM."/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+            <column name="updated_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="updated_on" valueComputed="${now}"/>
+            <column name="milestone_extract_id" valueComputed="(SELECT id FROM public.milestone_extract WHERE title = 'RoQCM Metric: Sample Run')"/>
+        </insert>
+
+
+        <!-- SIA Sample Submission Submitted Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="SIA Sample Submission: Submitted"/>
+            <column name="description" value="SIA sample submission submitted history"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(submitted_sample.sample_id, 1, 8) AS correlation_key,
+  'SIA Sample Submission: Submitted' AS title,
+  submitted_sample.id AS key,
+  DATETIME_TRUNC(submitted_sample.created_date, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_sia_us_p.submitted_sample` submitted_sample
+WHERE (submitted_sample.panel IN UNNEST(@soft_test_codes) OR (ARRAY_LENGTH(SPLIT(submitted_sample.gene_list_id, '_')) >= 2 AND SPLIT(submitted_sample.gene_list_id, '_')[1] IN UNNEST(@soft_test_codes)))
+  AND SUBSTRING(submitted_sample.sample_id, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND submitted_sample.created_date >= @extract_date_time
+ORDER BY submitted_sample.id
+]]>
+            </column>
+            <where>title = 'SIA Submitted Sample: Sample Submitted'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="SIA Sample Submission: Submitted"/>
+            <column name="description" value="Sample moved to &quot;Submitted&quot; status in SIA."/>
+            <where>title = 'Technologist 1 Stop'</where>
+        </update>
+
+
+        <!-- SIA Sample Submission Accepted Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="SIA Sample Submission: Accepted"/>
+            <column name="description" value="SIA sample submission accepted history"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(submitted_sample.sample_id, 1, 8) AS correlation_key,
+  'SIA Sample Submission: Accepted' AS title,
+  submitted_sample.id AS key,
+  DATETIME_TRUNC(submitted_sample.last_modified_date, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_sia_us_p.submitted_sample` submitted_sample
+WHERE (submitted_sample.panel IN UNNEST(@soft_test_codes) OR (ARRAY_LENGTH(SPLIT(submitted_sample.gene_list_id, '_')) >= 2 AND SPLIT(submitted_sample.gene_list_id, '_')[1] IN UNNEST(@soft_test_codes)))
+  AND SUBSTRING(submitted_sample.sample_id, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND submitted_sample.last_modified_date >= @extract_date_time
+  AND submitted_sample.submission_status = 'ACCEPTED'
+ORDER BY submitted_sample.id
+]]>
+            </column>
+            <where>title = 'SIA Submitted Sample: Sample Accepted'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="SIA Sample Submission: Accepted"/>
+            <column name="description" value="Sample moved to &quot;Accepted&quot; status in SIA."/>
+            <where>title = 'CGSL Library Prep Start'</where>
+        </update>
+
+
+        <!-- NGSWB Sample Status Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="NGSWB Sample: Status History"/>
+            <column name="description" value="NGSWB sample status history"/>
+            <column name="definition">
+<![CDATA[
+SELECT
+  SUBSTRING(Sample.title, 1, 8) AS correlation_key,
+  CONCAT('NGSWB Sample Status: ', SampleStatus.title) AS title,
+  SampleStatusChange.id AS key,
+  DATETIME_TRUNC(SampleStatusChange.changeTime, MINUTE) AS time,
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_ngs_us_p.Sample` Sample
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_ngs_us_p.SampleStatusChange` SampleStatusChange ON SampleStatusChange.sample_id = Sample.sample_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_ngs_us_p.SampleStatus` SampleStatus ON SampleStatus.status_id = SampleStatusChange.status_id
+WHERE SampleStatus.title IN (
+    'Awaiting Quality Control',
+    'Quality Control',
+    'Awaiting Counseling',
+    'Counseling',
+    'Counseling Complete',
+    'Awaiting Consultation',
+    'Consultation',
+    'Released'
+  )
+  AND EXISTS(
+    SELECT 1
+    FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_ngs_us_p.OrderedTest` OrderedTest
+    WHERE OrderedTest.sample_id = Sample.sample_id
+      AND OrderedTest.softMnemonic IN UNNEST(@soft_test_codes)
+  )
+  AND SUBSTRING(Sample.title, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND SampleStatusChange.changeTime >= @extract_date_time
+ORDER BY SampleStatusChange.id
+]]>
+            </column>
+            <where>title = 'NGSWB Sample Status History'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Awaiting Quality Control"/>
+            <column name="description" value="Sample moved to &quot;Awaiting Quality Control&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Awaiting Quality Control'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Quality Control"/>
+            <column name="description" value="Sample moved to &quot;Quality Control&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Quality Control'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Awaiting Counseling"/>
+            <column name="description" value="Sample moved to &quot;Awaiting Counseling&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Awaiting Counseling'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Counseling"/>
+            <column name="description" value="Sample moved to &quot;Counseling&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Counseling'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Counseling Complete"/>
+            <column name="description" value="Sample moved to &quot;Counseling Complete&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Counseling Complete'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Awaiting Consultation"/>
+            <column name="description" value="Sample moved to &quot;Awaiting Consultation&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Awaiting Consultation'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Consultation"/>
+            <column name="description" value="Sample moved to &quot;Consultation&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Consultation'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="NGSWB Sample Status: Released"/>
+            <column name="description" value="Sample moved to &quot;Released&quot; status in NGS Workbench."/>
+            <where>title = 'NSG Workbench: Released'</where>
+        </update>
+
+
+        <!-- Soft Action: Interpretation Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Action: Interpretation"/>
+            <column name="description" value="Soft interpretation action"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_REQINTERP.GP_REQI_TESTID AS correlation_key,
+  'Soft Action: Interpretation: Consultant Stop' AS title,
+  GP_ACTION.GP_ACT_RECID AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_REQINTERP` GP_REQINTERP
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION ON GP_ACTION.GP_ACT_OWNID = GP_REQINTERP.GP_REQI_RECID
+WHERE GP_ACTION.GP_ACT_OWNTP = 'REQINT' -- GP_REQINTERP Action
+  AND GP_ACTION.GP_ACT_CODE = '!TSO'
+  AND GP_REQINTERP.GP_REQI_TESTID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+ORDER BY GP_ACTION.GP_ACT_RECID
+]]>
+            </column>
+            <where>title = 'SOFT Action: Interpretation'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Interpretation: Consultant Stop"/>
+            <column name="description" value="Sample received an interpretation action code '!TSO' in Soft."/>
+            <where>title = 'Consultant Stop'</where>
+        </update>
+
+
+        <!-- Soft Action: Ordered Test Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Action: Ordered Test"/>
+            <column name="description" value="Soft ordered test action"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  CAST(GP_ACTION.GP_ACT_OWNID AS INT64) AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!BWKS' THEN 'Soft Action: Ordered Test: Technologist 1 Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = '%AEOGFSIGN' THEN 'Soft Action: Ordered Test: Consultant Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGT5' THEN 'Soft Action: Ordered Test: Technical Specialist Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGT6' THEN 'Soft Action: Ordered Test: Genetic Counseler Start'
+	   ELSE '' END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION
+WHERE GP_ACTION.GP_ACT_OWNTP IN ('F', 'RBS_TEST') -- GP_OTEST Action
+  AND ((GP_ACTION.GP_ACT_CODE = '!BWKS') -- Technologist 1 Start
+	OR (GP_ACTION.GP_ACT_CODE = '%AEOGFSIGN') -- Consultant Start / Genetic Counseler Stop
+	OR (GP_ACTION.GP_ACT_CODE = 'MGT5') -- Technical Specialist Start
+	OR (GP_ACTION.GP_ACT_CODE = 'MGT6') -- Genetic Counseler Start / Technologist 2 Stop / Technical Specialist Stop
+  )
+  AND GP_ACTION.GP_ACT_OWNID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_ACTION.GP_ACT_OWNID,
+  GP_ACTION.GP_ACT_CODE,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'SOFT Action: Test'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Technologist 1 Start"/>
+            <column name="description" value="Sample received an ordered test action code '!BWKS' in Soft."/>
+            <where>title = 'Technologist 1 Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Consultant Start"/>
+            <column name="description" value="Sample received an ordered test action code '%AEOGFSIGN' in Soft."/>
+            <where>title = 'Consultant Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Technical Specialist Start"/>
+            <column name="description" value="Sample received an ordered test action code 'MGT5' in Soft."/>
+            <where>title = 'Technical Specialist Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Genetic Counseler Start"/>
+            <column name="description" value="Sample received an ordered test action code 'MGT6' in Soft."/>
+            <where>title = 'Genetic Counseler Start'</where>
+        </update>
+
+
+        <!-- Soft Action: Requisition Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Action: Requisition"/>
+            <column name="description" value="Soft requisition action"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_OTEST.GP_OTST_RECID AS correlation_key,
+  'Soft Action: Requisition: Moltech Accessioning Stop' AS title,
+  GP_ACTION.GP_ACT_RECID AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ORDER` GP_ORDER ON GP_ORDER.GP_ORD_RECID = GP_OTEST.GP_OTST_ORDID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_REQUISITION` GP_REQUISITION ON GP_REQUISITION.GP_REQ_RECID = GP_ORDER.GP_ORD_REQID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION ON GP_ACTION.GP_ACT_OWNID = GP_REQUISITION.GP_REQ_RECID
+WHERE GP_ACTION.GP_ACT_OWNTP = 'REQ' -- GP_REQUISITION Action
+  AND GP_ACTION.GP_ACT_CODE = '%REQLAYOUT'
+  AND GP_ACTION.GP_ACT_COMM LIKE CONCAT('%', GP_OTEST.GP_OTST_CODE, '%')
+  AND GP_OTEST.GP_OTST_RECID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+ORDER BY GP_ACTION.GP_ACT_RECID
+]]>
+            </column>
+            <where>title = 'SOFT Action: Requisition'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Requisition: Moltech Accessioning Stop"/>
+            <column name="description" value="Sample received an requisition action code '%REQLAYOUT' in Soft."/>
+            <where>title = 'Moltech Accessioning Stop'</where>
+        </update>
+
+
+        <!-- Soft Action: Slide Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Action: Slide"/>
+            <column name="description" value="Soft slide action"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_TUBE.GP_TUB_ORDID AS correlation_key,
+  'Soft Action: Slide: Histology Stop' AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_TUBE` GP_TUBE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_DXP_SLIDE` GP_DXP_SLIDE ON GP_DXP_SLIDE.GP_P_SLD_TUBEID = GP_TUBE.GP_TUB_RECID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION ON GP_ACTION.GP_ACT_OWNID = GP_DXP_SLIDE.GP_P_SLD_RECID
+WHERE GP_ACTION.GP_ACT_OWNTP = 'H' -- GP_DXP_SLIDE Action
+  AND GP_ACTION.GP_ACT_CODE = 'PDCASEASS'
+  AND GP_TUBE.GP_TUB_ORDID IN UNNEST(@soft_order_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_TUBE.GP_TUB_ORDID,
+  GP_ACTION.GP_ACT_CODE,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'SOFT Action: Slide'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Slide: Histology Stop"/>
+            <column name="description" value="Sample received an slide action code 'PDCASEASS' in Soft."/>
+            <where>title = 'Histology Stop'</where>
+        </update>
+
+
+        <!-- Soft Action: Tube Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Action: Tube"/>
+            <column name="description" value="Soft tube action"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_TUBE.GP_TUB_ORDID AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!REC' THEN 'Soft Action: Tube: AP Path Accessioning Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGS67' THEN 'Soft Action: Tube: Extraction Stop'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGS80' THEN 'Soft Action: Tube: Extraction FFPE Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'PDVERO' THEN 'Soft Action: Tube: Histology Start'
+	   ELSE '' END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_TUBE` GP_TUBE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION ON GP_ACTION.GP_ACT_OWNID = GP_TUBE.GP_TUB_RECID
+WHERE GP_ACTION.GP_ACT_OWNTP = 'T' -- GP_TUBE Action
+  AND (
+	   (GP_ACTION.GP_ACT_CODE = '!REC' AND GP_ACTION.GP_ACT_PLACE = 'DMGLM') -- AP Accessioning Start
+	OR (GP_ACTION.GP_ACT_CODE = 'MGS67') -- Extraction Stop
+	OR (GP_ACTION.GP_ACT_CODE = 'MGS80') -- Extraction FFPE Start
+	OR (GP_ACTION.GP_ACT_CODE = 'PDVERO') -- Histology Start
+  )
+  AND GP_TUBE.GP_TUB_ORDID IN UNNEST(@soft_order_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_TUBE.GP_TUB_ORDID,
+  GP_ACTION.GP_ACT_CODE,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'SOFT Action: Tube'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: AP Path Accessioning Start"/>
+            <column name="description" value="Sample received an tube action code '!REC' in Soft."/>
+            <where>title = 'AP Path Accessioning Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Extraction Stop"/>
+            <column name="description" value="Sample received an tube action code 'MGS67' in Soft."/>
+            <where>title = 'Extraction Stop'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Extraction FFPE Start"/>
+            <column name="description" value="Sample received an tube action code 'MGS80' in Soft."/>
+            <where>title = 'Extraction Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Histology Start"/>
+            <column name="description" value="Sample received an tube action code 'PDVERO' in Soft."/>
+            <where>title = 'Histology Start'</where>
+        </update>
+
+
+        <!-- Soft Lab: Location Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Lab: Location"/>
+            <column name="description" value="Soft Lab location"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_OTEST.GP_OTST_RECID AS correlation_key,
+  CASE WHEN LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'CytoPath-RR' THEN 'Soft Lab: Location: Technical Slide Review Start'
+	   WHEN LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'MOL GEN LAB' THEN 'Soft Lab: Location: Moltech Accessioning Start'
+	   WHEN LAB_LOCAT.L0TYPE = 'T' AND LAB_LOCAT.L0PLACE = 'CytoPath' THEN 'Soft Lab: Location: Technical Slide Review Stop'
+	   ELSE '' END AS title,
+  MIN(LAB_LOCAT.AA_ID) AS key,
+  DATETIME_TRUNC(LAB_LOCAT.L0DATETIME, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ORDER` GP_ORDER ON GP_ORDER.GP_ORD_RECID = GP_OTEST.GP_OTST_ORDID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_ORDTEST` LAB_ORDTEST ON LAB_ORDTEST.OCORD = GP_ORDER.GP_ORD_EXTNUM AND LAB_ORDTEST.OTESTID = GP_OTEST.GP_OTST_CODE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_ATEST` LAB_ATEST ON LAB_ATEST.ACT_ATEST = LAB_ORDTEST.ACT_ORDTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_TEST_AT_TUBE` LAB_TEST_AT_TUBE ON LAB_TEST_AT_TUBE.ATEST_TEST_AT_TUBE = LAB_ATEST.AA_ID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_SPECIMEN_TUBE` LAB_SPECIMEN_TUBE ON LAB_SPECIMEN_TUBE.AA_ID = LAB_TEST_AT_TUBE.SPECIMEN_TUBE_TEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_L0OCAT` LAB_LOCAT ON LAB_LOCAT.SPECIMEN_TUBE_L0OCAT = LAB_SPECIMEN_TUBE.AA_ID
+WHERE LAB_ATEST.ATESTID = GP_OTEST.GP_OTST_CODE
+  AND ((LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'CytoPath-RR') -- Technical Slide Review Start
+	OR (LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'MOL GEN LAB') -- Moltech Accessioning Start
+	OR (LAB_LOCAT.L0TYPE = 'T' AND LAB_LOCAT.L0PLACE = 'CytoPath') -- Technical Slide Review Stop
+  )
+  AND GP_OTEST.GP_OTST_RECID IN UNNEST(@soft_test_keys)
+  AND LAB_LOCAT.L0DATETIME >= @extract_date_time
+GROUP BY
+  GP_OTEST.GP_OTST_RECID,
+  LAB_LOCAT.L0TYPE,
+  LAB_LOCAT.L0PLACE,
+  DATETIME_TRUNC(LAB_LOCAT.L0DATETIME, MINUTE)
+ORDER BY MIN(LAB_LOCAT.AA_ID)
+]]>
+            </column>
+            <where>title = 'SOFT Lab Location'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Technical Slide Review Start"/>
+            <column name="description" value="Sample received a lab location update 'CytoPath-RR' in Soft Lab."/>
+            <where>title = 'Technical Slide Review Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Moltech Accessioning Start"/>
+            <column name="description" value="Sample received a lab location update 'MOL GEN LAB' in Soft Lab."/>
+            <where>title = 'Moltech Accessioning Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Technical Slide Review Stop"/>
+            <column name="description" value="Sample received a lab location update 'CytoPath' in Soft Lab."/>
+            <where>title = 'Technical Slide Review Stop'</where>
+        </update>
+
+
+        <!-- Soft Ordered Test Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft Ordered Test"/>
+            <column name="description" value="Soft ordered test"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_OTEST.GP_OTST_RECID AS correlation_key,
+  'Soft Ordered Test: SDSC Receive Stop' AS title,
+  GP_OTEST.GP_OTST_RECID AS key,
+  DATETIME_TRUNC(GP_OTEST.GP_OTST_REGDT, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+WHERE GP_OTEST.GP_OTST_RECID IN UNNEST(@soft_test_keys)
+  AND GP_OTEST.GP_OTST_REGDT >= @extract_date_time
+ORDER BY GP_OTEST.GP_OTST_RECID
+]]>
+            </column>
+            <where>title = 'SOFT Test'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Ordered Test: SDSC Receive Stop"/>
+            <column name="description" value="Sample ordered test is created in Soft."/>
+            <where>title = 'SDSC Receive Stop'</where>
+        </update>
+
+
+        <!-- Soft RV: Action History Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="title" value="Soft RV: Action History"/>
+            <column name="description" value="Soft RV action history"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_OTEST.GP_OTST_RECID AS correlation_key,
+  'Soft RV: Action History: SDSC Receive Start' AS title,
+  RV_ACTION_HISTORY.AA_ID AS key,
+  DATETIME_TRUNC(RV_ACTION_HISTORY.ACTION_DT, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ORDER` GP_ORDER ON GP_ORDER.GP_ORD_RECID = GP_OTEST.GP_OTST_ORDID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_ORDTEST` LAB_ORDTEST ON LAB_ORDTEST.OCORD = GP_ORDER.GP_ORD_EXTNUM AND LAB_ORDTEST.OTESTID = GP_OTEST.GP_OTST_CODE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.RV_ACTION_HISTORY` RV_ACTION_HISTORY ON RV_ACTION_HISTORY.ORDERREF = LAB_ORDTEST.ACT_ORDTEST
+WHERE RV_ACTION_HISTORY.NAME = 'S_RECEIPTED'
+  AND RV_ACTION_HISTORY.OBJECT = 'Sample'
+  AND RV_ACTION_HISTORY.OBJECT_ID LIKE CONCAT(GP_OTEST.GP_OTST_CODE, '/%')
+  AND LAB_ORDTEST.OCANCELLED = 0
+  AND GP_OTEST.GP_OTST_RECID IN UNNEST(@soft_test_keys)
+  AND RV_ACTION_HISTORY.ACTION_DT >= @extract_date_time
+ORDER BY RV_ACTION_HISTORY.AA_ID
+]]>
+            </column>
+            <where>title = 'SOFT RV Action History'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft RV: Action History: SDSC Receive Start"/>
+            <column name="description" value="Sample received an action update of 'S_RECEIPTED' in Soft."/>
+            <where>title = 'SDSC Receive Start'</where>
+        </update>
+
+
+        <!-- Soft Action: Ordered Test Notes -->
+        <update schemaName="public" tableName="note_extract">
+            <column name="title" value="Soft Note"/>
+            <column name="description" value="Soft note"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_NOTE.GP_NOTE_ORDID AS correlation_key,
+  'Soft Note' AS title,
+  GP_NOTE.GP_NOTE_RECID AS key,
+  GP_NOTE.GP_NOTE_TEXT AS text,
+  CASE WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL AND GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN CONCAT(GS_EMPLOYEE.GS_EMP_LNAME, ', ', GS_EMPLOYEE.GS_EMP_FNAME)
+	   WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_LNAME
+	   WHEN GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_FNAME
+	   ELSE 'Unknown' END AS author,
+  DATETIME_TRUNC(GP_NOTE.GP_NOTE_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_NOTE` GP_NOTE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GS_EMPLOYEE` GS_EMPLOYEE ON GS_EMPLOYEE.GS_EMP_CODE = GP_NOTE.GP_NOTE_EMP
+WHERE GP_NOTE.GP_NOTE_ACT = 'Y'
+  AND GP_NOTE.GP_NOTE_ORDID IN UNNEST(@soft_order_keys)
+  AND GP_NOTE.GP_NOTE_DATE >= @extract_date_time
+ORDER BY
+  GP_NOTE.GP_NOTE_RECID
+]]>
+            </column>
+            <where>title = 'SOFT Note'</where>
+        </update>
+        <update schemaName="public" tableName="note">
+            <column name="title" value="Soft Note"/>
+            <column name="description" value="Sample received a note in Soft."/>
+            <where>title = 'Note'</where>
+        </update>
+
+
+        <!-- Soft Action: Ordered Test Notes -->
+        <update schemaName="public" tableName="note_extract">
+            <column name="title" value="Soft Action: Ordered Test"/>
+            <column name="description" value="Soft ordered test note"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  CAST(GP_ACTION.GP_ACT_OWNID AS INT64) AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE IN ('!EPROC', '!TORERUN') THEN 'Soft Rerun'
+	   ELSE '' END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE IN ('!EPROC', '!TORERUN') THEN 'To rerun checked'
+	   ELSE '' END AS text,
+  CASE WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL AND GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN CONCAT(GS_EMPLOYEE.GS_EMP_LNAME, ', ', GS_EMPLOYEE.GS_EMP_FNAME)
+	   WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_LNAME
+	   WHEN GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_FNAME
+	   ELSE 'Unknown' END AS author,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GS_EMPLOYEE` GS_EMPLOYEE ON GS_EMPLOYEE.GS_EMP_CODE = GP_ACTION.GP_ACT_EMP
+WHERE GP_ACTION.GP_ACT_OWNTP = 'F' -- GP_OTEST Action
+  AND GP_ACTION.GP_ACT_CODE IN ('!EPROC', '!TORERUN') -- To rerun checked
+  AND GP_ACTION.GP_ACT_OWNID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_ACTION.GP_ACT_OWNID,
+  GP_ACTION.GP_ACT_CODE,
+  GS_EMPLOYEE.GS_EMP_LNAME,
+  GS_EMPLOYEE.GS_EMP_FNAME,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY
+  MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'SOFT Action: Test'</where>
+        </update>
+        <update schemaName="public" tableName="note">
+            <column name="title" value="Soft Rerun"/>
+            <column name="description" value="Sample received an ordered test action code '!EPROC' or '!TORERUN' in Soft."/>
+            <where>title = 'Rerun'</where>
+        </update>
+    </changeSet>
+    <changeSet id="20241015-1" author="m108491">
+        <createTable tableName="activity_work_area">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_activity_work_area"/>
+            </column>
+            <column name="activity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_area_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="activity_work_area" baseColumnNames="activity_id"
+                                 constraintName="fk_act_wrk_ar_activity_id"
+                                 referencedTableName="activity"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="activity_work_area" baseColumnNames="work_area_id"
+                                 constraintName="fk_act_wrk_ar_work_area_id"
+                                 referencedTableName="work_area"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20241018-1" author="m108491">
+        <createTable tableName="workflow_work_area">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_workflow_work_area"/>
+            </column>
+            <column name="workflow_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="work_area_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="workflow_work_area" baseColumnNames="workflow_id"
+                                 constraintName="fk_wrkflw_wrk_ar_workflow_id"
+                                 referencedTableName="workflow"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="workflow_work_area" baseColumnNames="work_area_id"
+                                 constraintName="fk_wrkflw_wrk_ar_work_area_id"
+                                 referencedTableName="work_area"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20241024-1" author="m185844">
+        <!-- RoQCM Sample Metric Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(SampleEntity.title, 1, 8) AS correlation_key,
+  CASE WHEN MetricDefinition.title = 'sample.run.signoff.status' AND Metric.textValue = 'REVIEWED' THEN 'RoQCM Sample Run Signoff: Reviewed'
+	   ELSE NULL END AS title,
+  Metric.id AS key,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago') AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` SampleEntity
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` SampleEntityType ON SampleEntityType.id = SampleEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` Metric ON Metric.meteredEntity_id = SampleEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` MetricDefinition ON MetricDefinition.id = Metric.metricDefinition_id
+WHERE SampleEntityType.title = 'sample'
+  AND MetricDefinition.title = 'sample.run.signoff.status'
+  AND EXISTS (
+	SELECT 1
+	FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` TestCodeMetric
+	INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` TestCodeMetricDefinition ON TestCodeMetricDefinition.id = TestCodeMetric.metricDefinition_id
+	WHERE TestCodeMetric.meteredEntity_id = SampleEntity.id
+	  AND TestCodeMetric.currentValue = 'Y'
+	  AND TestCodeMetricDefinition.title IN ('sample.recipe.title', 'sample.genelist.soft_mnemonic')
+	  AND TestCodeMetric.textValue IN UNNEST(@soft_test_codes)
+  )
+  AND SUBSTRING(SampleEntity.title, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND DATETIME(Metric.createTime, 'America/Chicago') >= @extract_date_time
+ORDER BY Metric.id
+]]>
+            </column>
+            <where>title = 'RoQCM Metric: Sample'</where>
+        </update>
+
+
+        <!-- RoQCM Sample Run Metric Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  SUBSTRING(SampleEntity.title, 1, 8) AS correlation_key,
+  CASE WHEN MetricDefinition.title = 'run.milestone.sequencing.end' THEN 'RoQCM Sample Sequencing: Stop'
+	   WHEN MetricDefinition.title = 'run.milestone.sequencing.start' THEN 'RoQCM Sample Sequencing: Start'
+	   ELSE NULL END AS title,
+  Metric.id AS key,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago') AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` SampleEntity
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` SampleEntityType ON SampleEntityType.id = SampleEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntityRelationships` MeteredEntityRelationships ON MeteredEntityRelationships.entity_id = SampleEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MeteredEntity` RunEntity ON RunEntity.id = MeteredEntityRelationships.parentEntity_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.EntityType` RunEntityType ON RunEntityType.id = RunEntity.entityType_id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` Metric ON Metric.meteredEntity_id = RunEntity.id
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` MetricDefinition ON MetricDefinition.id = Metric.metricDefinition_id
+WHERE SampleEntityType.title = 'sample'
+  AND RunEntityType.title = 'run'
+  AND MetricDefinition.title IN ('run.milestone.sequencing.end', 'run.milestone.sequencing.start')
+  AND EXISTS (
+	SELECT 1
+	FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.Metric` TestCodeMetric
+	INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_lab_roqcm_us_p.MetricDefinition` TestCodeMetricDefinition ON TestCodeMetricDefinition.id = TestCodeMetric.metricDefinition_id
+	WHERE TestCodeMetric.meteredEntity_id = SampleEntity.id
+	  AND TestCodeMetric.currentValue = 'Y'
+	  AND TestCodeMetricDefinition.title IN ('sample.recipe.title', 'sample.genelist.soft_mnemonic')
+	  AND TestCodeMetric.textValue IN UNNEST(@soft_test_codes)
+  )
+  AND SUBSTRING(SampleEntity.title, 1, 8) IN UNNEST(@soft_order_numbers)
+  AND DATETIME(Metric.createTime, 'America/Chicago') >= @extract_date_time
+GROUP BY
+  SUBSTRING(SampleEntity.title, 1, 8),
+  Metric.id,
+  MetricDefinition.title,
+  DATETIME(TIMESTAMP_TRUNC(Metric.createTime, MINUTE), 'America/Chicago')
+ORDER BY Metric.id
+]]>
+            </column>
+            <where>title = 'RoQCM Metric: Sample Run'</where>
+        </update>
+
+
+        <!-- Soft Action: Ordered Test Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  CAST(GP_ACTION.GP_ACT_OWNID AS INT64) AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!BWKS' THEN 'Soft Action: Ordered Test: Technologist 1 Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = '%AEOGFSIGN' THEN 'Soft Action: Ordered Test: Consultant Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGT5' THEN 'Soft Action: Ordered Test: Technical Specialist Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGT6' THEN 'Soft Action: Ordered Test: Genetic Counseler Start'
+	   ELSE NULL END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION
+WHERE GP_ACTION.GP_ACT_OWNTP IN ('F', 'RBS_TEST') -- GP_OTEST Action
+  AND GP_ACTION.GP_ACT_CODE IN ('!BWKS', '%AEOGFSIGN', 'MGT5', 'MGT6')
+  AND GP_ACTION.GP_ACT_OWNID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_ACTION.GP_ACT_OWNID,
+  GP_ACTION.GP_ACT_CODE,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'Soft Action: Ordered Test'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Technologist 1 Start"/>
+            <column name="description" value="Sample received an ordered test action code &quot;!BWKS&quot; in Soft."/>
+            <where>title = 'Soft Action: Ordered Test: Technologist 1 Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Consultant Start"/>
+            <column name="description" value="Sample received an ordered test action code &quot;%AEOGFSIGN&quot; in Soft."/>
+            <where>title = 'Soft Action: Ordered Test: Consultant Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Technical Specialist Start"/>
+            <column name="description" value="Sample received an ordered test action code &quot;MGT5&quot; in Soft."/>
+            <where>title = 'Soft Action: Ordered Test: Technical Specialist Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Ordered Test: Genetic Counseler Start"/>
+            <column name="description" value="Sample received an ordered test action code &quot;MGT6&quot; in Soft."/>
+            <where>title = 'Soft Action: Ordered Test: Genetic Counseler Start'</where>
+        </update>
+
+
+        <!-- Soft Action: Tube Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_TUBE.GP_TUB_ORDID AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!REC' THEN CONCAT('Soft Action: Tube: AP Path Accessioning: ', GP_ACTION.GP_ACT_PLACE)
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGS67' THEN 'Soft Action: Tube: Extraction Stop'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'MGS80' THEN 'Soft Action: Tube: Extraction FFPE Start'
+	   WHEN GP_ACTION.GP_ACT_CODE = 'PDVERO' THEN 'Soft Action: Tube: Histology Start'
+	   ELSE NULL END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_TUBE` GP_TUBE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION ON GP_ACTION.GP_ACT_OWNID = GP_TUBE.GP_TUB_RECID
+WHERE GP_ACTION.GP_ACT_OWNTP = 'T' -- GP_TUBE Action
+  AND GP_ACTION.GP_ACT_CODE IN ('!REC', 'MGS67', 'MGS80', 'PDVERO')
+  AND (GP_ACTION.GP_ACT_CODE <> '!REC' OR GP_ACTION.GP_ACT_PLACE = 'DMGLM')
+  AND GP_TUBE.GP_TUB_ORDID IN UNNEST(@soft_order_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_TUBE.GP_TUB_ORDID,
+  GP_ACTION.GP_ACT_CODE,
+  GP_ACTION.GP_ACT_PLACE,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'Soft Action: Tube'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: AP Path Accessioning: DMGLM"/>
+            <column name="description" value="Sample received a tube action code &quot;!REC&quot; at place 'DMGLM' in Soft."/>
+            <where>title = 'Soft Action: Tube: AP Path Accessioning Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Extraction Stop"/>
+            <column name="description" value="Sample received a tube action code &quot;MGS67&quot; in Soft."/>
+            <where>title = 'Soft Action: Tube: Extraction Stop'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Extraction FFPE Start"/>
+            <column name="description" value="Sample received a tube action code &quot;MGS80&quot; in Soft."/>
+            <where>title = 'Soft Action: Tube: Extraction FFPE Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Tube: Histology Start"/>
+            <column name="description" value="Sample received a tube action code &quot;PDVERO&quot; in Soft."/>
+            <where>title = 'Soft Action: Tube: Histology Start'</where>
+        </update>
+
+
+        <!-- Soft Lab: Location Milestones -->
+        <update schemaName="public" tableName="milestone_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  GP_OTEST.GP_OTST_RECID AS correlation_key,
+  CASE WHEN LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'CytoPath-RR' THEN 'Soft Lab: Location: Technical Slide Review Start'
+	   WHEN LAB_LOCAT.L0TYPE = 'R' AND LAB_LOCAT.L0PLACE = 'MOL GEN LAB' THEN 'Soft Lab: Location: Moltech Accessioning Start'
+	   WHEN LAB_LOCAT.L0TYPE = 'T' AND LAB_LOCAT.L0PLACE = 'CytoPath' THEN 'Soft Lab: Location: Technical Slide Review Stop'
+	   ELSE NULL END AS title,
+  MIN(LAB_LOCAT.AA_ID) AS key,
+  DATETIME_TRUNC(LAB_LOCAT.L0DATETIME, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ORDER` GP_ORDER ON GP_ORDER.GP_ORD_RECID = GP_OTEST.GP_OTST_ORDID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_ORDTEST` LAB_ORDTEST ON LAB_ORDTEST.OCORD = GP_ORDER.GP_ORD_EXTNUM AND LAB_ORDTEST.OTESTID = GP_OTEST.GP_OTST_CODE
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_ATEST` LAB_ATEST ON LAB_ATEST.ACT_ATEST = LAB_ORDTEST.ACT_ORDTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_TEST_AT_TUBE` LAB_TEST_AT_TUBE ON LAB_TEST_AT_TUBE.ATEST_TEST_AT_TUBE = LAB_ATEST.AA_ID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_SPECIMEN_TUBE` LAB_SPECIMEN_TUBE ON LAB_SPECIMEN_TUBE.AA_ID = LAB_TEST_AT_TUBE.SPECIMEN_TUBE_TEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.LAB_L0OCAT` LAB_LOCAT ON LAB_LOCAT.SPECIMEN_TUBE_L0OCAT = LAB_SPECIMEN_TUBE.AA_ID
+WHERE LAB_ATEST.ATESTID = GP_OTEST.GP_OTST_CODE
+  AND LAB_LOCAT.L0TYPE IN ('R', 'T')
+  AND LAB_LOCAT.L0PLACE IN ('CytoPath', 'CytoPath-RR', 'MOL GEN LAB')
+  AND GP_OTEST.GP_OTST_RECID IN UNNEST(@soft_test_keys)
+  AND LAB_LOCAT.L0DATETIME >= @extract_date_time
+GROUP BY
+  GP_OTEST.GP_OTST_RECID,
+  LAB_LOCAT.L0TYPE,
+  LAB_LOCAT.L0PLACE,
+  DATETIME_TRUNC(LAB_LOCAT.L0DATETIME, MINUTE)
+ORDER BY MIN(LAB_LOCAT.AA_ID)
+]]>
+            </column>
+            <where>title = 'Soft Lab: Location'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Technical Slide Review Start"/>
+            <column name="description" value="Sample received a lab location update &quot;CytoPath-RR&quot; in Soft Lab."/>
+            <where>title = 'Soft Lab: Location: Technical Slide Review Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Moltech Accessioning Start"/>
+            <column name="description" value="Sample received a lab location update &quot;MOL GEN LAB&quot; in Soft Lab."/>
+            <where>title = 'Soft Lab: Location: Moltech Accessioning Start'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Lab: Location: Technical Slide Review Stop"/>
+            <column name="description" value="Sample received a lab location update &quot;CytoPath&quot; in Soft Lab."/>
+            <where>title = 'Soft Lab: Location: Technical Slide Review Stop'</where>
+        </update>
+
+
+        <!-- Soft Action: Interpretation, Requisition, and Slide Milestones -->
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Interpretation: Consultant Stop"/>
+            <column name="description" value="Sample received an interpretation action code &quot;!TSO&quot; in Soft."/>
+            <where>title = 'Soft Action: Interpretation: Consultant Stop'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Requisition: Moltech Accessioning Stop"/>
+            <column name="description" value="Sample received a requisition action code &quot;%REQLAYOUT&quot; in Soft."/>
+            <where>title = 'Soft Action: Requisition: Moltech Accessioning Stop'</where>
+        </update>
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft Action: Slide: Histology Stop"/>
+            <column name="description" value="Sample received a slide action code &quot;PDCASEASS&quot; in Soft."/>
+            <where>title = 'Soft Action: Slide: Histology Stop'</where>
+        </update>
+
+
+        <!-- Soft RV: Action History Milestones -->
+        <update schemaName="public" tableName="milestone">
+            <column name="title" value="Soft RV: Action History: SDSC Receive Start"/>
+            <column name="description" value="Sample received an action update of &quot;S_RECEIPTED&quot; in Soft."/>
+            <where>title = 'Soft RV: Action History: SDSC Receive Start'</where>
+        </update>
+
+
+        <!-- Create entity_extract table -->
+        <createTable schemaName="public" tableName="entity_extract">
+            <column name="id" type="bigserial" computed="true">
+                <constraints primaryKey="true" primaryKeyName="pk_entity_extract"/>
+            </column>
+            <column name="entity_type_id" type="bigint"/>
+            <column name="source_id" type="bigint"/>
+            <column name="title" type="varchar(255)"/>
+            <column name="type" type="varchar(100)"/>
+            <column name="description" type="varchar(1000)"/>
+            <column name="definition" type="varchar(5000)"/>
+            <column name="extract_duration" type="numeric"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="bigint"/>
+            <column name="created_on" type="datetime" defaultValueComputed="${now}"/>
+            <column name="updated_by" type="bigint"/>
+            <column name="updated_on" type="datetime"/>
+            <column name="retired_by" type="bigint"/>
+            <column name="retired_on" type="datetime"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="fk_entity_extract_entity_type_id"
+                                 baseTableName="entity_extract" baseColumnNames="entity_type_id"
+                                 referencedTableName="entity_type" referencedColumnNames="id"/>
+        <createIndex indexName="idx_entity_extract_entity_type"
+                     tableName="entity_extract">
+            <column name="entity_type_id"/>
+        </createIndex>
+        <addForeignKeyConstraint constraintName="fk_entity_extract_source_id"
+                                 baseTableName="entity_extract" baseColumnNames="source_id"
+                                 referencedTableName="source" referencedColumnNames="id"/>
+        <createIndex indexName="idx_entity_extract_source"
+                     tableName="entity_extract">
+            <column name="source_id"/>
+        </createIndex>
+        <addForeignKeyConstraint constraintName="fk_entity_extract_created_by"
+                                 baseTableName="entity_extract" baseColumnNames="created_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <createIndex indexName="idx_entity_extract_created_by"
+                     tableName="entity_extract">
+            <column name="created_by"/>
+        </createIndex>
+        <addForeignKeyConstraint constraintName="fk_entity_extract_updated_by"
+                                 baseTableName="entity_extract" baseColumnNames="updated_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <createIndex indexName="idx_entity_extract_updated_by"
+                     tableName="entity_extract">
+            <column name="updated_by"/>
+        </createIndex>
+        <addForeignKeyConstraint constraintName="fk_entity_extract_retired_by"
+                                 baseTableName="entity_extract" baseColumnNames="retired_by"
+                                 referencedTableName="app_user" referencedColumnNames="id"/>
+        <createIndex indexName="idx_entity_extract_retired_by"
+                     tableName="entity_extract">
+            <column name="retired_by"/>
+        </createIndex>
+
+
+        <!-- Create Soft Sample entity extract -->
+        <insert schemaName="public" tableName="entity_extract">
+            <column name="entity_type_id" valueComputed="(SELECT id FROM public.entity_type WHERE title = 'SAMPLE_SOFT')"/>
+            <column name="source_id" valueComputed="(SELECT id FROM public.source WHERE title = 'SOFT Prod')"/>
+            <column name="title" value="Sample Soft: Main"/>
+            <column name="type" value="SAMPLE_SOFT_MAIN"/>
+            <column name="description" value="Sample Soft main query"/>
+            <column name="definition">
+                <![CDATA[
+SELECT
+  CONCAT(CAST(GP_ORDER.GP_ORD_RECID AS STRING), '-', CAST(GP_OTEST.GP_OTST_RECID AS STRING)) AS entity_key,
+
+  GP_ORDER.GP_ORD_RECID AS soft_order_key,
+  GP_OTEST.GP_OTST_RECID AS soft_test_key,
+
+  GP_OTEST.GP_OTST_CODE AS soft_test_code,
+  CONCAT(SUBSTRING(GP_OTEST.GP_OTST_ORDNUM, 1, 2), '-', SUBSTRING(GP_OTEST.GP_OTST_ORDNUM, 5)) AS soft_order_number,
+  GP_OTEST.GP_OTST_ORDNUM AS soft_gis_order_number,
+  GP_ORDER.GP_ORD_EXTNUM AS soft_lab_order_number,
+  GP_ORDER.GP_ORD_ALIASES AS soft_path_dx_order_number,
+
+  DATETIME_TRUNC(GP_ORDER.GP_ORD_REGDT, MINUTE) AS soft_order_registered_on,
+  DATETIME_TRUNC(GP_OTEST.GP_OTST_REGDT, MINUTE) AS soft_test_registered_on,
+  DATETIME_TRUNC(GP_ORDER.GP_ORD_LMOD, MINUTE) AS last_modified_on,
+
+  CASE WHEN GP_OTEST.GP_OTST_STATUS = 'R' OR GP_ORDER.GP_ORD_DISPSTS LIKE '%Canceled%' THEN 'Canceled'
+       WHEN GP_OTEST.GP_OTST_STATUS = 'F' OR GP_ORDER.GP_ORD_DISPSTS LIKE '%Completed%' THEN 'Completed'
+       ELSE 'Pending' END AS status_title,
+  GP_ORDER.GP_ORD_STSDESC AS status_description,
+
+  -- SOFT Order Status Code
+  -- A - Specimen Not-Received
+  -- B - Specimen Received or no specimen - Order is pending to Processing
+  -- C - Obsolete, Processing Completed
+  -- D - Obsolete, Result Completed
+  -- E - Obsolete, Interpretation Completed
+  -- I - Inactive
+  -- R - Obsolete, Case pending to review
+  GP_ORDER.GP_ORD_STS AS soft_order_status_code,
+
+  -- SOFT Test Status Code
+  -- N - New Test
+  -- I - In Process
+  -- P - Panel Setup
+  -- C - Completed
+  -- E - Resulted
+  -- R - Cancelled/Rejected
+  -- S - Sent Out
+  -- H - Hold
+  -- F - Signed Out
+  -- V - Pending for Analysis Review
+  -- J - Pending for Interpretation
+  -- K - Pending for Interpretation Review
+  -- W - Pending for SignOut
+  -- L - Interpretation in Process
+  -- M - Process and Hold
+  -- D - Deactivated Report
+  -- Z - Report Release Hold
+  -- Y - Pending for Test Review
+  -- O - Collected
+  -- B - In Lab
+  -- G - Sign out in progress
+  -- T - Deactivated
+  GP_OTEST.GP_OTST_STATUS AS soft_test_status_code,
+
+  GP_PATIENT.GP_PAT_MRN AS patient_clinic_number,
+  GP_PATIENT.GP_PAT_LNAME AS patient_last_name,
+  GP_PATIENT.GP_PAT_FNAME AS patient_first_name,
+  CAST(DATE(GP_PATIENT.GP_PAT_DOB) AS DATE) AS patient_birth_date
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_OTEST` GP_OTEST
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ORDER` GP_ORDER ON GP_ORDER.GP_ORD_RECID = GP_OTEST.GP_OTST_ORDID
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_PATIENT` GP_PATIENT ON GP_PATIENT.GP_PAT_RECID = GP_ORDER.GP_ORD_PATID
+WHERE GP_OTEST.GP_OTST_CODE IN UNNEST(@soft_test_codes)
+  AND GP_ORDER.GP_ORD_LMOD >= @extract_date_time
+ORDER BY GP_ORDER.GP_ORD_RECID, GP_OTEST.GP_OTST_RECID
+]]>
+            </column>
+            <column name="extract_duration" value="86400000000000"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+
+        <!-- Update source -->
+        <update schemaName="public" tableName="source">
+            <column name="title" value="Soft Prod"/>
+            <column name="description" value="Soft Production Data"/>
+            <where>title='SOFT Prod'</where>
+        </update>
+
+
+        <!-- Add new application properties -->
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_ENTITY_BATCH_SIZE"/>
+            <column name="prop_value" value="1000"/>
+            <column name="description" value="Number of records to batch together when loading entities"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_MILESTONE_BATCH_SIZE"/>
+            <column name="prop_value" value="1000"/>
+            <column name="description" value="Number of records to batch together when loading milestones"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_NOTE_BATCH_SIZE"/>
+            <column name="prop_value" value="1000"/>
+            <column name="description" value="Number of records to batch together when loading notes"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_TEST_CODE_BATCH_SIZE"/>
+            <column name="prop_value" value="200"/>
+            <column name="description" value="Number of records to batch together when loading test codes"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" valueComputed="${now}"/>
+        </insert>
+
+
+        <!-- Remove obsolete LOADER_SEARCH_SAMPLE_DAYS application property -->
+        <delete schemaName="public" tableName="app_property">
+            <where>prop_key = 'LOADER_SEARCH_SAMPLE_DAYS'</where>
+        </delete>
+    </changeSet>
+    <changeSet id="20241030-1" author="m284532">
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="EMAIL_DOMAIN_WHITELIST"/>
+            <column name="prop_value" value="mayo.edu"/>
+            <column name="description" value="Allowed email domains"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" value="now()"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20241023-1" author="m108491">
+        <createTable tableName="contact">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_contact"/>
+            </column>
+            <column computed="false" name="name" type="varchar(255)"/>
+            <column computed="false" name="phone" type="varchar(255)"/>
+            <column computed="false" name="email" type="varchar(255)"/>
+            <column name="version" type="int" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="updated_on" type="datetime"/>
+            <column computed="false" name="updated_by" type="bigint"/>
+            <column computed="false" name="created_on" type="datetime"/>
+            <column computed="false" name="created_by" type="bigint"/>
+        </createTable>
+        <createTable tableName="activity_contact">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_activity_contact"/>
+            </column>
+            <column name="activity_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="activity_contact" baseColumnNames="activity_id"
+                                 constraintName="fk_act_cont_activity_id"
+                                 referencedTableName="activity"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="activity_contact" baseColumnNames="contact_id"
+                                 constraintName="fk_act_cont_contact_id"
+                                 referencedTableName="contact"
+                                 referencedColumnNames="id"/>
+        <createTable tableName="workflow_contact">
+            <column computed="true" name="id"  type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_workflow_contact"/>
+            </column>
+            <column name="workflow_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="workflow_contact" baseColumnNames="workflow_id"
+                                 constraintName="fk_wrkflw_cont_workflow_id"
+                                 referencedTableName="workflow"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="workflow_contact" baseColumnNames="contact_id"
+                                 constraintName="fk_wrkflw_cont_contact_id"
+                                 referencedTableName="contact"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="20241104-1" author="m185844">
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_EXTRACT_LOCK_DATETIME"/>
+            <column name="prop_value"/><!-- Set null -->
+            <column name="description" value="Loader lock start time (or null if not currently locked)"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" value="now()"/>
+        </insert>
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_EXTRACT_LOCK_DURATION"/>
+            <column name="prop_value" value="4h"/>
+            <column name="description" value="Loader lock duration lock is active"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" value="now()"/>
+        </insert>
+    </changeSet>
+    <changeSet id="20241106-1" author="m284532">
+        <dropColumn tableName="workflow" columnName="terminate_after_hours"/>
+    </changeSet>
+    <changeSet id="20241107-1" author="m185844">
+        <insert schemaName="public" tableName="app_property">
+            <column name="prop_key" value="LOADER_ENTITY_UPDATE_PENDING_DURATION"/>
+            <column name="prop_value" value="90d"/>
+            <column name="description" value="Amount of time to search for updates to pending entities which haven't been updated recently"/>
+            <column name="version" value="0"/>
+            <column name="created_by" valueComputed="(SELECT id FROM public.app_user WHERE lan_id = 'system')"/>
+            <column name="created_on" value="now()"/>
+        </insert>
+
+        <!-- Soft Action: Ordered Test Notes -->
+        <update schemaName="public" tableName="note_extract">
+            <column name="definition">
+                <![CDATA[
+SELECT
+  CAST(GP_ACTION.GP_ACT_OWNID AS INT64) AS correlation_key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!TORERUN' THEN 'Soft Rerun'
+	   ELSE NULL END AS title,
+  MIN(GP_ACTION.GP_ACT_RECID) AS key,
+  CASE WHEN GP_ACTION.GP_ACT_CODE = '!TORERUN' THEN 'To rerun checked'
+	   ELSE NULL END AS text,
+  CASE WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL AND GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN CONCAT(GS_EMPLOYEE.GS_EMP_LNAME, ', ', GS_EMPLOYEE.GS_EMP_FNAME)
+	   WHEN GS_EMPLOYEE.GS_EMP_LNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_LNAME
+	   WHEN GS_EMPLOYEE.GS_EMP_FNAME IS NOT NULL THEN GS_EMPLOYEE.GS_EMP_FNAME
+	   ELSE 'Unknown' END AS author,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE) AS time
+FROM `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GP_ACTION` GP_ACTION
+INNER JOIN `ml-mps-adl-intudp-phi-p-d5cb.phi_sccsoft_us_p.GS_EMPLOYEE` GS_EMPLOYEE ON GS_EMPLOYEE.GS_EMP_CODE = GP_ACTION.GP_ACT_EMP
+WHERE GP_ACTION.GP_ACT_OWNTP = 'F' -- GP_OTEST Action
+  AND GP_ACTION.GP_ACT_CODE = '!TORERUN'
+  AND GP_ACTION.GP_ACT_OWNID IN UNNEST(@soft_test_keys)
+  AND GP_ACTION.GP_ACT_DATE >= @extract_date_time
+GROUP BY
+  GP_ACTION.GP_ACT_OWNID,
+  GP_ACTION.GP_ACT_CODE,
+  GS_EMPLOYEE.GS_EMP_LNAME,
+  GS_EMPLOYEE.GS_EMP_FNAME,
+  DATETIME_TRUNC(GP_ACTION.GP_ACT_DATE, MINUTE)
+ORDER BY
+  MIN(GP_ACTION.GP_ACT_RECID)
+]]>
+            </column>
+            <where>title = 'Soft Action: Ordered Test'</where>
+        </update>
+        <update schemaName="public" tableName="note">
+            <column name="description" value="Sample received an ordered test action code '!TORERUN' in Soft."/>
+            <where>title = 'Soft Rerun'</where>
+        </update>
+    </changeSet>
+</databaseChangeLog>

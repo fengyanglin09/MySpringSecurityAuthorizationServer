@@ -25,8 +25,21 @@
       <version>${revision}</version>
     </dependency>
     <dependency>
+      <groupId>diy.mqml</groupId>
+      <artifactId>Data-Layer</artifactId>
+      <version>${revision}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.azure.spring</groupId>
+      <artifactId>spring-cloud-azure-starter-active-directory</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.microsoft.graph</groupId>
+      <artifactId>microsoft-graph</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>

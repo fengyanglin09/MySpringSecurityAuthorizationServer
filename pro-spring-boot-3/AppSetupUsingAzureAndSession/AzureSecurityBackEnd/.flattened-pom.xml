@@ -20,6 +20,7 @@
     </license>
   </licenses>
   <modules>
+    <module>Data-Layer</module>
     <module>Security-Layer</module>
     <module>Api-Layer</module>
   </modules>
@@ -27,6 +28,7 @@
     <url>https://dev.azure.com/mclm/GBS%20CAD/_git/LabStatusPro_App</url>
   </scm>
   <properties>
+    <querydsl.version>5.1.0</querydsl.version>
     <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
     <revision>1.0.0</revision>
   </properties>
@@ -48,6 +50,19 @@
         <groupId>com.microsoft.graph</groupId>
         <artifactId>microsoft-graph</artifactId>
         <version>6.21.0</version>
+      </dependency>
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-apt</artifactId>
+        <version>${querydsl.version}</version>
+        <classifier>jakarta</classifier>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.querydsl</groupId>
+        <artifactId>querydsl-jpa</artifactId>
+        <version>${querydsl.version}</version>
+        <classifier>jakarta</classifier>
       </dependency>
     </dependencies>
   </dependencyManagement>
