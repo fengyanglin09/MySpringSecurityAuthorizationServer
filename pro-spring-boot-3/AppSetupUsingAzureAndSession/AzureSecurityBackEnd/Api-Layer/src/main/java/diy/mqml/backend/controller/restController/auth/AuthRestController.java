@@ -1,6 +1,7 @@
 package diy.mqml.backend.controller.restController.auth;
 
 
+import diy.mqml.datalayer.persistence.entity.user.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthRestController {
     @GetMapping("/session-status")
     public ResponseEntity<String> getSessionStatus() {
+
         // Check if the user is authenticated
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
