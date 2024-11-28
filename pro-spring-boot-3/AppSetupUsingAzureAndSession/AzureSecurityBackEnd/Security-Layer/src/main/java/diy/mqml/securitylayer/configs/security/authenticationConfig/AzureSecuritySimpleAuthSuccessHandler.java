@@ -1,5 +1,6 @@
 package diy.mqml.securitylayer.configs.security.authenticationConfig;
 
+import diy.mqml.securitylayer.configs.security.userConfig.SecuritySimpleUserDetails;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -23,7 +24,13 @@ public class AzureSecuritySimpleAuthSuccessHandler extends SavedRequestAwareAuth
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
             super.onAuthenticationSuccess(request, response, authentication);
             if(this.azureSecuritySimpleAuthHandler != null && authentication != null){
-                this.azureSecuritySimpleAuthHandler.accept(request, response, authentication);
+
+                final Object principal = authentication.getPrincipal();
+
+                if (principal instanceof SecuritySimpleUserDetails userDetails){
+                    this.azureSecuritySimpleAuthHandler.accept(request, response, userDetails.getDetails());
+                }
+
             }
     }
 

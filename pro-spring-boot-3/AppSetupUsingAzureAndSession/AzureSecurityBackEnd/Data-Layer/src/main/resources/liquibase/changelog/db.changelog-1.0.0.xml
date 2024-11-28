@@ -32,7 +32,6 @@
             </column>
             <column computed="false" name="role" type="varchar(25)"/>
         </createTable>
-
     </changeSet>
 
 

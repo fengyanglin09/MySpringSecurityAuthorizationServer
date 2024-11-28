@@ -2,6 +2,9 @@ package diy.mqml.securitylayer.configs.security;
 
 import com.azure.spring.cloud.autoconfigure.implementation.aad.security.AadWebApplicationHttpSecurityConfigurer;
 import diy.mqml.securitylayer.configs.security.authenticationConfig.AzureSecuritySimpleAuthSuccessHandler;
+import diy.mqml.securitylayer.service.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -30,15 +33,16 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 @EnableMethodSecurity
+@Slf4j
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-
+    private final UserService userService;
 
     /**
      * Add configuration logic as needed.
      */
     @Bean
-//    @Order(2)
     SecurityFilterChain authenticationFilterChain(
             HttpSecurity http,
             CorsConfigurationSource corsConfigurationSource
@@ -49,8 +53,10 @@ public class SecurityConfig {
 
         http.with(AadWebApplicationHttpSecurityConfigurer.aadWebApplication(), Customizer.withDefaults());
 
-        http.oauth2Login(config-> config.successHandler(new AzureSecuritySimpleAuthSuccessHandler((request, response, authentication)->{
+        http.oauth2Login(config-> config.successHandler(new AzureSecuritySimpleAuthSuccessHandler((request, response, user)->{
                     //todo - define the logic to add users to database
+                        log.debug("User {} successfully logged in", user.getFullName());
+                        this.userService.registerUser(user);
                 })));
 
 //        http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource));
