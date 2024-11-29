@@ -37,6 +37,11 @@ spring:
         format_sql: true
 #        dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  session:
+    jdbc:
+      initialize-schema: never  #not creating a table for session
+      cleanup-cron: "0 0 0 * * SUN"
+      table-name: spring_session
 
   liquibase:
     enabled: false

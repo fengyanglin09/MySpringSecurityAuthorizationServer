@@ -12,7 +12,7 @@
   <artifactId>AzureSecurityBackEnd</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
-  <name>AppSetup-Main</name>
+  <name>AppSetup-Session-Management</name>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>

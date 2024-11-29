@@ -19,7 +19,7 @@ export class AuthService {
   }
 
   isAuthenticated():Observable<string> {
-    return this.http.get(`${this.baseUrl}/auth-status/session-status`, {responseType:"text"})
+    return this.http.get(`${this.baseUrl}/auth-status/authentication-status`, {responseType:"text"})
       .pipe(take(1))
   }
 
