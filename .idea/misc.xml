@@ -19,6 +19,7 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Security-Layer/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Data-Layer/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Actuator-Layer/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -26,6 +27,7 @@
         <option value="$PROJECT_DIR$/SpringBootAuthorizationServerProject/AuthorizationServer2/pom.xml" />
         <option value="$PROJECT_DIR$/SpringBootAuthorizationServerProject/ResourceServer2/pom.xml" />
         <option value="$PROJECT_DIR$/SpringBootAuthorizationServerProject/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/MyRetroApp/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/users/pom.xml" />
       </set>
     </option>

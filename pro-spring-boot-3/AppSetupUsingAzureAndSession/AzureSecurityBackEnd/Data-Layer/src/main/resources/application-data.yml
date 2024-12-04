@@ -20,7 +20,9 @@ server:
       timeout: 9H
       persistent: false
 
+
 spring:
+
   datasource:
     username: 'myuser'
     password: '123456'
@@ -45,6 +47,8 @@ spring:
 
   liquibase:
     enabled: false
+
+
 
 ---
 spring:

@@ -64,6 +64,8 @@ public class SecurityConfig {
         http.anonymous(AbstractHttpConfigurer::disable);
 
         http.authorizeHttpRequests(request->request
+//                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/auth-status/**").permitAll()
                 .requestMatchers("/welcome-page/**").authenticated()
                 .anyRequest().authenticated());

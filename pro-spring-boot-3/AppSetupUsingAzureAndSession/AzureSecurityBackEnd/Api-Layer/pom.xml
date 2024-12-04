@@ -22,6 +22,13 @@
 
 		<dependency>
 			<groupId>diy.mqml</groupId>
+			<artifactId>Actuator-Layer</artifactId>
+			<version>${revision}</version>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>diy.mqml</groupId>
 			<artifactId>Security-Layer</artifactId>
 			<version>${revision}</version>
 			<scope>compile</scope>

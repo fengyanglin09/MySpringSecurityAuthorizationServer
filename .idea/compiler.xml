@@ -13,12 +13,22 @@
         <module name="Api-Layer" />
         <module name="Users" />
         <module name="Security-Layer" />
-        <module name="MyRetroApp" />
+      </profile>
+      <profile name="Annotation profile for AppSetup-Session-Management" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="Actuator-Layer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AuthorizationServer" target="17" />
       <module name="AuthorizationServer2" target="17" />
+      <module name="MyRetroApp" target="17" />
       <module name="OauthClient" target="17" />
       <module name="ResourceServer" target="17" />
       <module name="ResourceServer2" target="17" />
@@ -28,6 +38,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Actuator-Layer" options="-parameters" />
       <module name="Api-Layer" options="-parameters" />
       <module name="AuthorizationServer" options="-parameters" />
       <module name="AuthorizationServer2" options="-parameters" />

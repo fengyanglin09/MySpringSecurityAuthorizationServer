@@ -21,6 +21,7 @@
   <modules>
     <module>Data-Layer</module>
     <module>Security-Layer</module>
+    <module>Actuator-Layer</module>
     <module>Api-Layer</module>
   </modules>
 

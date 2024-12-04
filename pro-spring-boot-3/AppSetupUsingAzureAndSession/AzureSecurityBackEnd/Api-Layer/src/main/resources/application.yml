@@ -3,11 +3,22 @@ server:
   port: 8080
 
 
+# Actuator Config
+#management:
+#  endpoints:
+#    web:
+#      base-path: /users-system-management
+
 
 spring:
   profiles:
     active: ${ENV_PROFILE:local}
 
+  application:
+    name: My App
+
+  main:
+    web-application-type: servlet
 
 ---
 spring:

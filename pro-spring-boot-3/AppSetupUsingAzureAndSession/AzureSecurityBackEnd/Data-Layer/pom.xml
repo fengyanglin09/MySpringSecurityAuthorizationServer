@@ -5,6 +5,7 @@
     <artifactId>Data-Layer</artifactId>
     <name>Data-Layer</name>
     <description>Data-Layer</description>
+    <packaging>jar</packaging>
 
     <parent>
         <artifactId>AzureSecurityBackEnd</artifactId>
@@ -90,6 +91,11 @@
         <dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-jdbc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
     </dependencies>

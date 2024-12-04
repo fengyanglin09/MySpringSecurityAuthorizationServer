@@ -1,0 +1,32 @@
+
+
+# Actuator Config
+management:
+  endpoints:
+    web:
+#      base-path: /users-system-management
+
+      exposure:
+        include: health, info, env, beans, shutdown
+
+  endpoint:
+    shutdown:
+      enabled: true # be careful, this will shut down the app
+    health:
+      show-details: always
+
+  # Actuator Info
+
+  info:
+    env:
+      enabled: true
+# define what will be displayed from the info endpoint
+info:
+  application:
+    name: ${spring.application.name}
+  developer:
+    name: 'Mark Lin'
+    email: 'MarkLin@Mayo.Edu'
+  api:
+    version: '1.0'
+
