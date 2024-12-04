@@ -12,17 +12,8 @@
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
         <module name="Users" />
-        <module name="Security-Layer" />
-      </profile>
-      <profile name="Annotation profile for AppSetup-Session-Management" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/unknown/spring-boot-configuration-processor-unknown.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
         <module name="Actuator-Layer" />
+        <module name="Security-Layer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

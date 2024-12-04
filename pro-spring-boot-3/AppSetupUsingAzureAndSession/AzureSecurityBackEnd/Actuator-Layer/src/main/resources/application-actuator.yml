@@ -7,13 +7,15 @@ management:
 #      base-path: /users-system-management
 
       exposure:
-        include: health, info, env, beans, shutdown
+        include: health, info, env, beans, shutdown, event-config
 
   endpoint:
     shutdown:
       enabled: true # be careful, this will shut down the app
     health:
       show-details: always
+      status:
+        order: events-down,fatal,down,out-of-service,unknown,up
 
   # Actuator Info
 

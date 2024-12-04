@@ -65,6 +65,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(request->request
 //                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
+                .requestMatchers("users/**").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/auth-status/**").permitAll()
                 .requestMatchers("/welcome-page/**").authenticated()
