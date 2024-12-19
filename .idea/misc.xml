@@ -20,6 +20,8 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Security-Layer/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Data-Layer/pom.xml" />
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Actuator-Layer/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Custom-Starter-Layer/pom.xml" />
+        <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -31,9 +33,8 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/users/pom.xml" />
       </set>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="openjdk-19" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="temurin-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ProjectType">

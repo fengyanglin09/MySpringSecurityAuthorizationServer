@@ -11,7 +11,7 @@
         <artifactId>AzureSecurityBackEnd</artifactId>
         <groupId>diy.mqml</groupId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
 

@@ -12,7 +12,7 @@
         <groupId>diy.mqml</groupId>
         <artifactId>AzureSecurityBackEnd</artifactId>
         <version>${revision}</version>
-        <relativePath>../pom.xml</relativePath>
+        <relativePath>../../pom.xml</relativePath>
     </parent>
 
 

@@ -19,10 +19,10 @@
   </parent>
 
   <modules>
-    <module>Data-Layer</module>
-    <module>Security-Layer</module>
-    <module>Actuator-Layer</module>
-    <module>Api-Layer</module>
+    <module>AzureSecurityBackEnd/Data-Layer</module>
+    <module>AzureSecurityBackEnd/Security-Layer</module>
+    <module>AzureSecurityBackEnd/Actuator-Layer</module>
+    <module>AzureSecurityBackEnd/Api-Layer</module>
   </modules>
 
   <properties>

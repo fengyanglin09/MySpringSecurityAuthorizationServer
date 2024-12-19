@@ -11,6 +11,7 @@
         <module name="Data-Layer" />
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
+        <module name="Custom-Starter-Layer" />
         <module name="Users" />
         <module name="Actuator-Layer" />
         <module name="Security-Layer" />
@@ -33,6 +34,7 @@
       <module name="Api-Layer" options="-parameters" />
       <module name="AuthorizationServer" options="-parameters" />
       <module name="AuthorizationServer2" options="-parameters" />
+      <module name="Custom-Starter-Layer" options="-parameters" />
       <module name="Data-Layer" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
