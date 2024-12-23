@@ -22,12 +22,6 @@
   <dependencies>
     <dependency>
       <groupId>diy.mqml</groupId>
-      <artifactId>Custom-Starter-Layer</artifactId>
-      <version>${revision}</version>
-      <scope>compile</scope>
-    </dependency>
-    <dependency>
-      <groupId>diy.mqml</groupId>
       <artifactId>Actuator-Layer</artifactId>
       <version>${revision}</version>
       <scope>compile</scope>

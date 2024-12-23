@@ -21,8 +21,10 @@
   </licenses>
   <dependencies>
     <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>diy.mqml</groupId>
+      <artifactId>Custom-Starter-Layer</artifactId>
+      <version>${revision}</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
