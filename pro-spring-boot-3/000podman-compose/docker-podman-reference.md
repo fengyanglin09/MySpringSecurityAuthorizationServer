@@ -1,6 +1,6 @@
 To start your services:
 ```shell
-$ podman-compose -f custom-compose.yml up
+$ podman-compose -f custom-compose.yml up -d
 ```
 
 
@@ -15,3 +15,11 @@ To stop your services:
 $ podman-compose -f custom-compose.yml down
 ```
 
+
+
+## examples:
+### start postgreSQL:
+
+```shell
+$ podman-compose -f postgres-compose.yml up -d
+```

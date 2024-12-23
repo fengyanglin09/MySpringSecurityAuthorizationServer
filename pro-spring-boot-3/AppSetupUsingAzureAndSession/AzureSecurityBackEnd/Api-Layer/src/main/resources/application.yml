@@ -1,0 +1,66 @@
+
+server:
+  port: 8080
+
+
+# Actuator Config
+#management:
+#  endpoints:
+#    web:
+#      base-path: /users-system-management
+
+
+spring:
+  profiles:
+    active: ${ENV_PROFILE:local}
+
+  application:
+    name: My App
+
+  main:
+    web-application-type: servlet
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
+app-landing-page:
+  name: 'app-main-page'
+  url: 'http://localhost:4200/'
+
+
+#---
+#spring:
+#  config:
+#    activate:
+#      on-profile: starter
+#
+#  application:
+#    name: 'this is for starter'
+#  h2:
+#    console:
+#      enabled: true
+#      path: /h2-console
+#
+#  jpa:
+#    generate-ddl: true
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
+#
+#  datasource:
+#    url: jdbc:h2:mem:users_db
+#
+#
+##  liquibase:
+##    enabled: true
+#
+#
+#myretro:
+#  audit:
+#    prefix: '>>> '
+#    use-logger: true
+
+

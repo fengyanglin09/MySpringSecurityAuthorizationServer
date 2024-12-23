@@ -8,13 +8,19 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SessionSecurityBackend" />
-        <module name="MyRetroApp" />
+        <module name="Data-Layer" />
+        <module name="SimpleAuthorizationServer" />
+        <module name="Api-Layer" />
+        <module name="Custom-Starter-Layer" />
         <module name="Users" />
+        <module name="Actuator-Layer" />
+        <module name="Security-Layer" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="AuthorizationServer" target="17" />
       <module name="AuthorizationServer2" target="17" />
+      <module name="MyRetroApp" target="17" />
       <module name="OauthClient" target="17" />
       <module name="ResourceServer" target="17" />
       <module name="ResourceServer2" target="17" />
@@ -24,13 +30,19 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Actuator-Layer" options="-parameters" />
+      <module name="Api-Layer" options="-parameters" />
       <module name="AuthorizationServer" options="-parameters" />
       <module name="AuthorizationServer2" options="-parameters" />
+      <module name="Custom-Starter-Layer" options="-parameters" />
+      <module name="Data-Layer" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />
       <module name="ResourceServer2" options="-parameters" />
+      <module name="Security-Layer" options="-parameters" />
       <module name="SessionSecurityBackend" options="-parameters" />
+      <module name="SimpleAuthorizationServer" options="-parameters" />
       <module name="SpringBootAuthorizationServerProject" options="" />
       <module name="Users" options="-parameters" />
       <module name="users (2)" options="-parameters" />

@@ -1,0 +1,7 @@
+<div *ngIf="user">
+  <p>Welcome, {{ user.name }}</p>
+  <p>Email: {{ user.email }}</p>
+</div>
+<div *ngIf="!user">
+  <a href="/oauth2/authorization/azure">Login</a>
+</div>
