@@ -53,6 +53,7 @@ public class User {
     private String jobTitle;
 
     @Basic(fetch = FetchType.LAZY)
+    @Column(columnDefinition = "BLOB")//"BLOB is the type for storing binary data in MySQL or H2"
     private byte[] photo;
 
     @ElementCollection(targetClass = UserRole.class)

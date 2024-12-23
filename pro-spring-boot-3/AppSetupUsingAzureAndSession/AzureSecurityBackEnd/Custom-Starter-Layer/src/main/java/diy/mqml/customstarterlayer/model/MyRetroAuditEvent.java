@@ -1,10 +1,7 @@
 package diy.mqml.customstarterlayer.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
@@ -26,6 +23,8 @@ public class MyRetroAuditEvent {
     private LocalDateTime timestamp = LocalDateTime.now();
     private String interceptor;
     private String method;
+
+    @Column(columnDefinition = "TEXT")
     private String args;
     private String result;
     private String message;

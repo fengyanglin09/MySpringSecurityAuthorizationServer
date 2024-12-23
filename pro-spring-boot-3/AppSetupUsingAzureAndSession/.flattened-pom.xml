@@ -12,7 +12,7 @@
   <artifactId>AzureSecurityBackEnd</artifactId>
   <version>1.0.0</version>
   <packaging>pom</packaging>
-  <name>AppSetup-Session-Management</name>
+  <name>AzureSecurityBackEnd</name>
   <licenses>
     <license>
       <name>Apache License, Version 2.0</name>
@@ -24,6 +24,7 @@
     <module>AzureSecurityBackEnd/Security-Layer</module>
     <module>AzureSecurityBackEnd/Actuator-Layer</module>
     <module>AzureSecurityBackEnd/Api-Layer</module>
+    <module>AzureSecurityBackEnd/Custom-Starter-Layer</module>
   </modules>
   <scm>
     <url>https://dev.azure.com/mclm/GBS%20CAD/_git/LabStatusPro_App</url>

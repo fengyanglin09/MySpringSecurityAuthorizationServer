@@ -1,5 +1,7 @@
 package diy.mqml.backend.controller.restController.api;
 
+import diy.mqml.customstarterlayer.annotations.MyRetroAudit;
+import diy.mqml.customstarterlayer.annotations.MyRetroAuditOutputFormat;
 import diy.mqml.securitylayer.configs.security.userConfig.SecuritySimpleUser;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,7 @@ public class ApiController {
                 "name", simpleUser.getFullName(),
                 "email", simpleUser.getEmailAddress()
         );
+
 
         return objectMap;
     }

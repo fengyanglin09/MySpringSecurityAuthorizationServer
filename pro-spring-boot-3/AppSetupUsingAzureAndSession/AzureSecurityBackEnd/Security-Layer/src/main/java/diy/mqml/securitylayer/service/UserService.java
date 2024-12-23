@@ -1,6 +1,8 @@
 package diy.mqml.securitylayer.service;
 
 
+import diy.mqml.customstarterlayer.annotations.MyRetroAudit;
+import diy.mqml.customstarterlayer.annotations.MyRetroAuditOutputFormat;
 import diy.mqml.datalayer.dto.user.AuthUserDto;
 import diy.mqml.datalayer.dto.user.UserDto;
 import diy.mqml.datalayer.persistence.entity.user.User;
@@ -158,6 +160,7 @@ public class UserService {
     }
 
     @Transactional
+    @MyRetroAudit(showArgs = true, message = "Saving or updating user", format = MyRetroAuditOutputFormat.JSON, prettyPrint = false)
     public void registerUser(SecuritySimpleUser authenticatedUser) {
         User authUser = new User(authenticatedUser.getLanId(), authenticatedUser.getLastName(), authenticatedUser.getFirstName())
                 .setFullName(authenticatedUser.getFullName())
@@ -184,6 +187,7 @@ public class UserService {
         }
         noteUserLogin(user);
     }
+
 
     private boolean matches(User user1, User user2) {
         return USER_COMPARATOR.compare(user1, user2) == 0 &&

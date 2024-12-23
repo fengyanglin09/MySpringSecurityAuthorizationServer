@@ -21,7 +21,12 @@ server:
       persistent: false
 
 
+
+
 spring:
+  config:
+    activate:
+      on-profile: not-starter
 
   datasource:
     username: 'myuser'
@@ -45,10 +50,21 @@ spring:
       cleanup-cron: "0 0 0 * * SUN"
       table-name: spring_session
 
+
   liquibase:
     enabled: false
 
 
+
+---
+spring:
+  config:
+    activate:
+      on-profile: starter
+
+  liquibase:
+    enabled: true
+    change-log: classpath:liquibase/db.changelog-master.xml
 
 ---
 spring:
@@ -62,3 +78,37 @@ logging:
     diy.mqml: DEBUG
     org.hibernate.tool.schema.internal: DEBUG
     org.hibernate.SQL: DEBUG
+
+
+
+---
+spring:
+  config:
+    activate:
+      on-profile: starter
+
+  application:
+    name: 'this is for starter'
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+  datasource:
+    url: jdbc:h2:mem:users_db
+
+
+#  liquibase:
+#    enabled: true
+
+
+myretro:
+  audit:
+    prefix: '>>> '
+    use-logger: true

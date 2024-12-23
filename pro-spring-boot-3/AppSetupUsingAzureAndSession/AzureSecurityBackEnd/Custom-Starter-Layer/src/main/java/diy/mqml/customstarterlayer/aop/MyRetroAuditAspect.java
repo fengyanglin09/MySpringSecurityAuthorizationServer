@@ -40,7 +40,8 @@ public class MyRetroAuditAspect {
         }
 
         Object result = joinPoint.proceed(joinPoint.getArgs());
-        myRetroEvent.setResult(result.toString());
+        myRetroEvent.setResult("customer starter aop logging worked");
+//        myRetroEvent.setResult(result.toString());
 
         if (audit.intercept() == MyRetroAuditIntercept.AFTER) {
             myRetroEvent.setInterceptor(MyRetroAuditIntercept.AFTER.name());

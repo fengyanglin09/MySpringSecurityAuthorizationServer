@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -63,8 +64,11 @@ public class SecurityConfig {
 
         http.anonymous(AbstractHttpConfigurer::disable);
 
+        //this setting is needed to allow the h2-console to be displayed
+        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
+
         http.authorizeHttpRequests(request->request
-//                .requestMatchers("/actuator/**").hasRole("ACTUATOR")
+//                .requestMatchers("/h2-console/**").permitAll()
                 .requestMatchers("users/**").permitAll()
                 .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/auth-status/**").permitAll()

@@ -7,7 +7,7 @@
   <groupId>diy.mqml</groupId>
   <artifactId>AzureSecurityBackEnd</artifactId>
   <version>${revision}</version>
-  <name>AppSetup-Session-Management</name>
+  <name>AzureSecurityBackEnd</name>
   <packaging>pom</packaging>
 
 
@@ -23,6 +23,7 @@
     <module>AzureSecurityBackEnd/Security-Layer</module>
     <module>AzureSecurityBackEnd/Actuator-Layer</module>
     <module>AzureSecurityBackEnd/Api-Layer</module>
+    <module>AzureSecurityBackEnd/Custom-Starter-Layer</module>
   </modules>
 
   <properties>
