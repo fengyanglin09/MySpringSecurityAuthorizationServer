@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Data-Layer/Data-Layer.iml" filepath="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/AzureSecurityBackEnd/Data-Layer/Data-Layer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/SpringSecurityAuthorizationServerProject.iml" filepath="$PROJECT_DIR$/.idea/SpringSecurityAuthorizationServerProject.iml" />
     </modules>
   </component>

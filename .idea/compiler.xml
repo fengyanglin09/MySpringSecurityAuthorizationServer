@@ -7,14 +7,22 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SessionSecurityBackend" />
+        <module name="Custom-Starter-Layer" />
+        <module name="Actuator-Layer" />
         <module name="Data-Layer" />
+        <module name="Security-Layer" />
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
-        <module name="Custom-Starter-Layer" />
-        <module name="Users" />
-        <module name="Actuator-Layer" />
-        <module name="Security-Layer" />
+      </profile>
+      <profile name="Annotation profile for JPA-Hibernate-Study" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.2/spring-boot-configuration-processor-3.4.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="JPA-Hibernate-Study" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,7 +32,10 @@
       <module name="OauthClient" target="17" />
       <module name="ResourceServer" target="17" />
       <module name="ResourceServer2" target="17" />
+      <module name="SessionSecurityBackend" target="17" />
+      <module name="SimpleAuthorizationServer" target="17" />
       <module name="SpringBootAuthorizationServerProject" target="1.5" />
+      <module name="Users" target="17" />
       <module name="users (2)" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -36,6 +47,7 @@
       <module name="AuthorizationServer2" options="-parameters" />
       <module name="Custom-Starter-Layer" options="-parameters" />
       <module name="Data-Layer" options="-parameters" />
+      <module name="JPA-Hibernate-Study" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />

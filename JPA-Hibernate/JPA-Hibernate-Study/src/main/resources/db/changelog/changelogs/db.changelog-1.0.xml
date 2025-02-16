@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.8.xsd">
+
+        <!-- Create USERS Table -->
+        <changeSet id="20250212-1" author="mark">
+
+<!--                <createTable tableName="USERS">-->
+<!--                        <column name="USERNAME" type="VARCHAR(15)">-->
+<!--                                <constraints primaryKey="true" nullable="false"/>-->
+<!--                        </column>-->
+<!--                        <column name="ADDRESS" type="VARCHAR(255)">-->
+<!--                                <constraints nullable="false"/>-->
+<!--                        </column>-->
+<!--                </createTable>-->
+
+
+        <!-- Create BILLINGDETAILS Table -->
+
+<!--                <createTable tableName="BILLINGDETAILS">-->
+<!--                        <column name="ACCOUNT" type="VARCHAR(15)">-->
+<!--                                <constraints primaryKey="true" nullable="false"/>-->
+<!--                        </column>-->
+<!--                        <column name="BANKNAME" type="VARCHAR(255)">-->
+<!--                                <constraints nullable="false"/>-->
+<!--                        </column>-->
+<!--                        <column name="USERNAME" type="VARCHAR(15)">-->
+<!--                                <constraints nullable="false"/>-->
+<!--                        </column>-->
+<!--                </createTable>-->
+
+
+        <!-- Add Foreign Key for BILLINGDETAILS -> USERS (USERNAME) -->
+
+<!--                <addForeignKeyConstraint baseColumnNames="USERNAME"-->
+<!--                                         baseTableName="BILLINGDETAILS"-->
+<!--                                         constraintName="fk_billingdetails_users"-->
+<!--                                         referencedTableName="USERS"-->
+<!--                                         referencedColumnNames="USERNAME"/>-->
+
+
+                <createTable tableName="message">
+                    <column name="id" type="BIGINT" autoIncrement="true">
+                        <constraints primaryKey="true" nullable="false"/>
+                    </column>
+                    <column name="text" type="VARCHAR(255)">
+                        <constraints nullable="false"/>
+                    </column>
+                </createTable>
+
+
+        <!-- Create USERS Table with New Schema -->
+
+                <createTable tableName="USERS">
+                        <column name="ID" type="BIGINT">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="USERNAME" type="VARCHAR(15)">
+                                <constraints unique="true" nullable="false"/>
+                        </column>
+                        <column name="ADDRESS_STREET" type="VARCHAR(255)">
+                                <constraints nullable="false"/>
+                        </column>
+                        <column name="ADDRESS_ZIPCODE" type="VARCHAR(5)">
+                                <constraints nullable="false"/>
+                        </column>
+                        <column name="ADDRESS_CITY" type="VARCHAR(255)">
+                                <constraints nullable="false"/>
+                        </column>
+                </createTable>
+
+
+        <!-- Create BILLINGDETAILS Table with New Schema -->
+
+                <createTable tableName="BILLINGDETAILS">
+                        <column name="ID" type="BIGINT">
+                                <constraints primaryKey="true" nullable="false"/>
+                        </column>
+                        <column name="ACCOUNT" type="VARCHAR(15)">
+                                <constraints nullable="false"/>
+                        </column>
+                        <column name="BANKNAME" type="VARCHAR(255)">
+                                <constraints nullable="false"/>
+                        </column>
+                        <column name="USER_ID" type="BIGINT">
+                                <constraints nullable="false"/>
+                        </column>
+                </createTable>
+
+
+        <!-- Add Foreign Key for BILLINGDETAILS -> USERS (ID) -->
+
+                <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                         baseTableName="BILLINGDETAILS"
+                                         constraintName="fk_billingdetails_users_id"
+                                         referencedTableName="USERS"
+                                         referencedColumnNames="ID"/>
+
+
+        <!-- Create USER_BILLINGDETAILS Table -->
+
+                <createTable tableName="USER_BILLINGDETAILS">
+                        <column name="USER_ID" type="BIGINT">
+                                <constraints nullable="false"/>
+                        </column>
+                        <column name="BILLINGDETAILS_ID" type="BIGINT">
+                                <constraints nullable="false"/>
+                        </column>
+                </createTable>
+
+
+        <!-- Add Primary Key for USER_BILLINGDETAILS -->
+
+                <addPrimaryKey columnNames="USER_ID, BILLINGDETAILS_ID"
+                               constraintName="pk_user_billingdetails"
+                               tableName="USER_BILLINGDETAILS"/>
+
+
+        <!-- Add Foreign Keys for USER_BILLINGDETAILS -->
+
+                <addForeignKeyConstraint baseColumnNames="USER_ID"
+                                         baseTableName="USER_BILLINGDETAILS"
+                                         constraintName="fk_user_billingdetails_users"
+                                         referencedTableName="USERS"
+                                         referencedColumnNames="ID"/>
+
+
+  
+                <addForeignKeyConstraint baseColumnNames="BILLINGDETAILS_ID"
+                                         baseTableName="USER_BILLINGDETAILS"
+                                         constraintName="fk_user_billingdetails_billingdetails"
+                                         referencedTableName="BILLINGDETAILS"
+                                         referencedColumnNames="ID"/>
+        </changeSet>
+
+</databaseChangeLog>
