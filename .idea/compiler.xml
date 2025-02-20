@@ -14,20 +14,19 @@
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
       </profile>
-      <profile name="Annotation profile for JPA Query And SubSelect" enabled="true">
+      <profile name="Annotation profile for 02 Embeddable and Converters" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.2/spring-boot-configuration-processor-3.4.2.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.2/spring-boot-configuration-processor-3.4.2.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="JPA Query And SubSelect" />
+        <module name="02 Embeddable And Converters And Formula" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="01 JPA Query And SubSelect" target="17" />
       <module name="AuthorizationServer" target="17" />
       <module name="AuthorizationServer2" target="17" />
       <module name="MyRetroApp" target="17" />
@@ -43,13 +42,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="01 JPA Query And SubSelect" options="-parameters" />
+      <module name="02 Embeddable And Converters And Formula" options="-parameters" />
       <module name="Actuator-Layer" options="-parameters" />
       <module name="Api-Layer" options="-parameters" />
       <module name="AuthorizationServer" options="-parameters" />
       <module name="AuthorizationServer2" options="-parameters" />
       <module name="Custom-Starter-Layer" options="-parameters" />
       <module name="Data-Layer" options="-parameters" />
-      <module name="JPA Query And SubSelect" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />

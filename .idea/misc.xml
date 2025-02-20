@@ -24,6 +24,8 @@
         <option value="$PROJECT_DIR$/pro-spring-boot-3/AppSetupUsingAzureAndSession/pom.xml" />
         <option value="$PROJECT_DIR$/JPA-Hibernate/JPA-Hibernate-Study/pom.xml" />
         <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/JPA Query And SubSelect/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/02 Embeddable and Converters/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/02 Embeddable And Converters And Formula/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
