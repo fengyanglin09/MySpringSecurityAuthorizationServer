@@ -14,15 +14,17 @@
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
       </profile>
-      <profile name="Annotation profile for JPA-Hibernate-Study" enabled="true">
+      <profile name="Annotation profile for JPA Query And SubSelect" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.2/spring-boot-configuration-processor-3.4.2.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-configuration-processor/3.4.2/spring-boot-configuration-processor-3.4.2.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
-        <module name="JPA-Hibernate-Study" />
+        <module name="JPA Query And SubSelect" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -47,7 +49,7 @@
       <module name="AuthorizationServer2" options="-parameters" />
       <module name="Custom-Starter-Layer" options="-parameters" />
       <module name="Data-Layer" options="-parameters" />
-      <module name="JPA-Hibernate-Study" options="-parameters" />
+      <module name="JPA Query And SubSelect" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />
