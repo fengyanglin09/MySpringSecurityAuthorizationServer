@@ -14,7 +14,7 @@
         <module name="SimpleAuthorizationServer" />
         <module name="Api-Layer" />
       </profile>
-      <profile name="Annotation profile for 02 Embeddable and Converters" enabled="true">
+      <profile name="Annotation profile for Joined" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -22,7 +22,18 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
+        <module name="Single_Table" />
+        <module name="Joined" />
         <module name="02 Embeddable And Converters And Formula" />
+      </profile>
+      <profile name="Annotation profile for Table_Per_Class" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
+        </processorPath>
+        <module name="Table_Per_Class" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -50,6 +61,7 @@
       <module name="AuthorizationServer2" options="-parameters" />
       <module name="Custom-Starter-Layer" options="-parameters" />
       <module name="Data-Layer" options="-parameters" />
+      <module name="Joined" options="-parameters" />
       <module name="MyRetroApp" options="-parameters" />
       <module name="OauthClient" options="-parameters" />
       <module name="ResourceServer" options="-parameters" />
@@ -57,7 +69,9 @@
       <module name="Security-Layer" options="-parameters" />
       <module name="SessionSecurityBackend" options="-parameters" />
       <module name="SimpleAuthorizationServer" options="-parameters" />
+      <module name="Single_Table" options="-parameters" />
       <module name="SpringBootAuthorizationServerProject" options="" />
+      <module name="Table_Per_Class" options="-parameters" />
       <module name="Users" options="-parameters" />
       <module name="users (2)" options="-parameters" />
     </option>

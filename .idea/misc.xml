@@ -26,6 +26,9 @@
         <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/JPA Query And SubSelect/pom.xml" />
         <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/02 Embeddable and Converters/pom.xml" />
         <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/02 Embeddable And Converters And Formula/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/03 Mapping Inheritance/Single_Table/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/03 Mapping Inheritance/Joined/pom.xml" />
+        <option value="$PROJECT_DIR$/Spring-JPA-Hibernate/03 Mapping Inheritance/Table_Per_Class/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

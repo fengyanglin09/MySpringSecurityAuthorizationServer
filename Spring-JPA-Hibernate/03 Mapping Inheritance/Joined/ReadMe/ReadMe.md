@@ -1,0 +1,3 @@
+this mapping strategy is more difficult to implement by hand—even ad hoc reporting is more complex. This is an important consideration if you plan to mix Spring Data JPA or Hibernate code with handwritten SQL. A usual approach and a portable solution may be working with JPQL (Jakarta Persistence Query Language) and annotating methods with JPQL queries.
+
+Furthermore, even though this mapping strategy is deceptively simple, our experience is that performance can be unacceptable for complex class hierarchies. Queries always require a join across many tables or many sequential reads.
